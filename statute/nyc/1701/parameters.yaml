@@ -1,0 +1,61 @@
+# NYC Administrative Code § 11-1701 - Income Tax Parameters
+#
+# NYC income tax bracket thresholds. These have been unchanged since 2017.
+#
+# Source: https://www.tax.ny.gov/pit/file/tax-tables/2024.htm
+
+variable: nyc_income_tax_thresholds
+entity: TaxUnit
+period: Year
+
+# Tax rates (fixed in Administrative Code)
+rates:
+  - 0.03078   # 3.078%
+  - 0.03762   # 3.762%
+  - 0.03819   # 3.819%
+  - 0.03876   # 3.876%
+
+# Bracket thresholds by filing status for 2024
+2024:
+  single:
+    0.03078: 0
+    0.03762: 12000
+    0.03819: 25000
+    0.03876: 50000
+
+  married_filing_jointly:
+    0.03078: 0
+    0.03762: 21600
+    0.03819: 45000
+    0.03876: 90000
+
+  head_of_household:
+    0.03078: 0
+    0.03762: 14400
+    0.03819: 30000
+    0.03876: 60000
+
+  # MFS uses single thresholds
+  married_filing_separately:
+    0.03078: 0
+    0.03762: 12000
+    0.03819: 25000
+    0.03876: 50000
+
+# Historical (unchanged since 2017)
+2023:
+  single:
+    0.03078: 0
+    0.03762: 12000
+    0.03819: 25000
+    0.03876: 50000
+  married_filing_jointly:
+    0.03078: 0
+    0.03762: 21600
+    0.03819: 45000
+    0.03876: 90000
+  head_of_household:
+    0.03078: 0
+    0.03762: 14400
+    0.03819: 30000
+    0.03876: 60000

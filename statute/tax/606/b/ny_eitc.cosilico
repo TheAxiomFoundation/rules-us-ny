@@ -1,0 +1,40 @@
+# NY Tax Law § 606(d) - Earned Income Credit
+#
+# "A resident individual shall be allowed a credit equal to thirty percent
+# of the earned income credit allowed under section 32 of the internal
+# revenue code for the same taxable year."
+#
+# The NY EITC is a refundable credit equal to 30% of the federal EITC.
+#
+# Source: https://www.tax.ny.gov/pit/credits/earned_income_credit.htm
+# Statute: https://www.nysenate.gov/legislation/laws/TAX/606
+
+imports:
+  # Federal EITC from cosilico-us
+  federal_eitc: cosilico-us:statute/26/32/a/1/earned_income_credit
+  ny_household_credit: statute/tax/606/household_credit
+
+parameters:
+  # NY EITC is 30% of federal (fixed in statute)
+  ny_eitc_percentage: 0.30
+
+# NY Earned Income Credit
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NY Earned Income Credit"
+description "New York State earned income credit per Tax Law § 606(d)"
+refundable: true
+
+formula:
+  # § 606(d): NY EITC = 30% of federal EITC, reduced by household credit
+  ny_eitc = federal_eitc * ny_eitc_percentage
+
+  # The household credit reduces the EITC (but cannot make it negative)
+  return max(0, ny_eitc - ny_household_credit)
+
+defined_for:
+  federal_eitc > 0
+
+default 0

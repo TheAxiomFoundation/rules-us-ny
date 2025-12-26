@@ -1,0 +1,75 @@
+# NY Tax Law § 606 - Tax Credit Parameters
+#
+# Parameters for NY tax credits including:
+# - NY EITC (§ 606(d))
+# - Empire State Child Credit (§ 606(c))
+#
+# Sources:
+# - https://www.tax.ny.gov/pit/credits/earned_income_credit.htm
+# - https://www.tax.ny.gov/pit/credits/empire_state_child_credit.htm
+
+# NY EITC Parameters
+ny_eitc:
+  variable: ny_eitc
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+
+  2024:
+    # NY EITC = 30% of federal EITC
+    percentage_of_federal: 0.30
+
+  # Proposed future changes (not yet enacted)
+  # 2025: 0.35
+  # 2026: 0.40
+
+# Empire State Child Credit Parameters
+empire_state_child_credit:
+  variable: empire_state_child_credit
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+
+  2024:
+    # Flat amount per qualifying child
+    per_child_amount: 100
+
+    # Percentage of federal CTC (using 2017 federal rules)
+    # Federal CTC was $1,000/child in 2017, so 33% = $330 max
+    federal_ctc_percentage: 0.33
+
+    # Phase-out thresholds (based on 2017 federal CTC rules)
+    # These are the federal thresholds, not NY-specific
+    phaseout_single: 75000
+    phaseout_joint: 110000
+    phaseout_hoh: 75000
+
+    # Phase-out rate: $16.50 per $1,000 over threshold
+    # (This is 33% of the $50 federal CTC phase-out)
+    phaseout_rate_per_1000: 16.50
+
+    # Maximum credit per child (33% of $1,000 federal)
+    max_credit_per_child: 330
+
+  # 2025 enhanced credit (enacted in 2024-2025 budget)
+  2025:
+    per_child_amount: 100
+    federal_ctc_percentage: 0.33
+    phaseout_single: 75000
+    phaseout_joint: 110000
+    phaseout_rate_per_1000: 16.50
+    # Enhanced amounts for lower-income families TBD
+
+# Household Credit (reduces EITC)
+household_credit:
+  variable: ny_household_credit
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+
+  2024:
+    # The household credit is a separate small credit that
+    # reduces the NY EITC amount. Most EITC recipients
+    # do not claim the household credit as it is smaller.
+    max_credit_single: 90
+    max_credit_joint: 180

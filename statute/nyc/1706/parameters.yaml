@@ -1,0 +1,39 @@
+# NYC Administrative Code § 11-1706 - Tax Credit Parameters
+#
+# NYC EITC and School Tax Credit parameters
+#
+# Source: https://www.tax.ny.gov/pit/credits/new_york_city_credits.htm
+
+# NYC EITC
+nyc_eitc:
+  variable: nyc_eitc
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+
+  2024:
+    # NYC EITC = 5% of federal EITC
+    percentage_of_federal: 0.05
+
+# NYC School Tax Credit
+nyc_school_tax_credit:
+  variable: nyc_school_tax_credit
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+
+  2024:
+    # Credit amounts by filing status
+    single: 63
+    married_filing_jointly: 125
+    head_of_household: 63
+    married_filing_separately: 63
+
+    # Household income limit
+    income_limit: 250000
+
+  # Historical
+  2023:
+    single: 63
+    married_filing_jointly: 125
+    income_limit: 250000

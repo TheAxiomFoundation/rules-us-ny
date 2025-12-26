@@ -1,0 +1,34 @@
+# NY Tax Law § 614 - Standard Deduction Parameters
+#
+# Standard deduction amounts for New York State resident individuals.
+# These amounts have been unchanged since tax year 2018.
+#
+# Source: https://www.tax.ny.gov/pit/file/standard_deductions.htm
+
+variable: ny_standard_deduction
+entity: TaxUnit
+period: Year
+dtype: Money
+
+# Standard deduction by filing status
+2024:
+  single: 8000
+  married_filing_jointly: 16050
+  head_of_household: 11200
+  married_filing_separately: 7500
+  dependent: 3100
+
+# Historical values (unchanged since 2018)
+2023:
+  single: 8000
+  married_filing_jointly: 16050
+  head_of_household: 11200
+  married_filing_separately: 7500
+  dependent: 3100
+
+2022:
+  single: 8000
+  married_filing_jointly: 16050
+  head_of_household: 11200
+  married_filing_separately: 7500
+  dependent: 3100

@@ -1,0 +1,97 @@
+# NY Tax Law § 601 - Imposition of Tax
+#
+# "There is hereby imposed for each taxable year on the New York taxable
+# income of every resident individual... a tax determined in accordance
+# with the following rate schedule"
+#
+# New York has 9 marginal tax brackets ranging from 4% to 10.9%.
+# For NY AGI > $107,650, a supplemental tax calculation applies.
+#
+# Source: https://www.nysenate.gov/legislation/laws/TAX/601
+
+imports:
+  # NY taxable income = NY AGI - (standard or itemized deduction)
+  ny_taxable_income: statute/tax/612/ny_taxable_income
+  ny_agi: statute/tax/612/ny_agi
+  filing_status: cosilico-us:statute/26/1/filing_status
+
+parameters:
+  # Tax rates are fixed in statute
+  rates: [0.04, 0.045, 0.0525, 0.055, 0.06, 0.0685, 0.0965, 0.103, 0.109]
+
+  # Bracket thresholds loaded from parameters.yaml by filing status
+  thresholds_single: parameters#single
+  thresholds_joint: parameters#married_filing_jointly
+  thresholds_hoh: parameters#head_of_household
+  thresholds_separate: parameters#married_filing_separately
+
+  # Supplemental tax AGI threshold
+  supplemental_agi_threshold: 107650
+
+# Helper function to select thresholds based on filing status
+function get_thresholds(filing_status: FilingStatus) -> Array[Money]:
+  match filing_status {
+    SINGLE => thresholds_single
+    MARRIED_FILING_JOINTLY => thresholds_joint
+    HEAD_OF_HOUSEHOLD => thresholds_hoh
+    MARRIED_FILING_SEPARATELY => thresholds_separate
+    QUALIFYING_WIDOW => thresholds_joint
+  }
+
+# NY Personal Income Tax
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NY Income Tax"
+description "New York State personal income tax per Tax Law § 601"
+
+formula:
+  # Get bracket thresholds for this filing status
+  thresholds = get_thresholds(filing_status)
+
+  # Apply progressive marginal rates
+  tax = 0
+
+  # 4% bracket
+  bracket_4 = min(ny_taxable_income, thresholds[0.045]) - 0
+  tax = tax + max(0, bracket_4) * 0.04
+
+  # 4.5% bracket
+  bracket_4_5 = min(ny_taxable_income, thresholds[0.0525]) - thresholds[0.045]
+  tax = tax + max(0, bracket_4_5) * 0.045
+
+  # 5.25% bracket
+  bracket_5_25 = min(ny_taxable_income, thresholds[0.055]) - thresholds[0.0525]
+  tax = tax + max(0, bracket_5_25) * 0.0525
+
+  # 5.5% bracket
+  bracket_5_5 = min(ny_taxable_income, thresholds[0.06]) - thresholds[0.055]
+  tax = tax + max(0, bracket_5_5) * 0.055
+
+  # 6% bracket
+  bracket_6 = min(ny_taxable_income, thresholds[0.0685]) - thresholds[0.06]
+  tax = tax + max(0, bracket_6) * 0.06
+
+  # 6.85% bracket
+  bracket_6_85 = min(ny_taxable_income, thresholds[0.0965]) - thresholds[0.0685]
+  tax = tax + max(0, bracket_6_85) * 0.0685
+
+  # 9.65% bracket
+  bracket_9_65 = min(ny_taxable_income, thresholds[0.103]) - thresholds[0.0965]
+  tax = tax + max(0, bracket_9_65) * 0.0965
+
+  # 10.3% bracket
+  bracket_10_3 = min(ny_taxable_income, thresholds[0.109]) - thresholds[0.103]
+  tax = tax + max(0, bracket_10_3) * 0.103
+
+  # 10.9% bracket (no ceiling)
+  bracket_10_9 = ny_taxable_income - thresholds[0.109]
+  tax = tax + max(0, bracket_10_9) * 0.109
+
+  return tax
+
+defined_for:
+  ny_taxable_income > 0
+
+default 0

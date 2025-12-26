@@ -1,0 +1,73 @@
+# NYC Administrative Code § 11-1701 - Imposition of Tax
+#
+# New York City imposes a separate personal income tax on NYC residents
+# in addition to NYS income tax.
+#
+# NYC has 4 marginal tax brackets: 3.078%, 3.762%, 3.819%, 3.876%
+# The top rate applies at relatively low income levels.
+#
+# Source: https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-5889
+
+imports:
+  # NYC taxable income (same base as NY taxable income for residents)
+  nyc_taxable_income: statute/nyc/1701/nyc_taxable_income
+  filing_status: cosilico-us:statute/26/1/filing_status
+  is_nyc_resident: statute/nyc/is_nyc_resident
+
+parameters:
+  # Tax rates (fixed in Administrative Code)
+  rates: [0.03078, 0.03762, 0.03819, 0.03876]
+
+  # Bracket thresholds by filing status
+  thresholds_single: parameters#single
+  thresholds_joint: parameters#married_filing_jointly
+  thresholds_hoh: parameters#head_of_household
+
+# Helper function to select thresholds based on filing status
+function get_thresholds(filing_status: FilingStatus) -> Array[Money]:
+  match filing_status {
+    SINGLE => thresholds_single
+    MARRIED_FILING_SEPARATELY => thresholds_single
+    MARRIED_FILING_JOINTLY => thresholds_joint
+    HEAD_OF_HOUSEHOLD => thresholds_hoh
+    QUALIFYING_WIDOW => thresholds_joint
+  }
+
+# NYC Personal Income Tax
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NYC Income Tax"
+description "New York City personal income tax per Admin Code § 11-1701"
+
+formula:
+  # Only NYC residents pay NYC income tax
+  if not is_nyc_resident then
+    return 0
+
+  thresholds = get_thresholds(filing_status)
+  tax = 0
+
+  # 3.078% bracket
+  bracket_1 = min(nyc_taxable_income, thresholds[0.03762]) - 0
+  tax = tax + max(0, bracket_1) * 0.03078
+
+  # 3.762% bracket
+  bracket_2 = min(nyc_taxable_income, thresholds[0.03819]) - thresholds[0.03762]
+  tax = tax + max(0, bracket_2) * 0.03762
+
+  # 3.819% bracket
+  bracket_3 = min(nyc_taxable_income, thresholds[0.03876]) - thresholds[0.03819]
+  tax = tax + max(0, bracket_3) * 0.03819
+
+  # 3.876% bracket (no ceiling)
+  bracket_4 = nyc_taxable_income - thresholds[0.03876]
+  tax = tax + max(0, bracket_4) * 0.03876
+
+  return tax
+
+defined_for:
+  is_nyc_resident AND nyc_taxable_income > 0
+
+default 0

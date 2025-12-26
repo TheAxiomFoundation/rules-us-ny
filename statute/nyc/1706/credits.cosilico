@@ -1,0 +1,78 @@
+# NYC Administrative Code § 11-1706 - Tax Credits
+#
+# NYC provides additional tax credits for NYC residents:
+# - NYC EITC: 5% of federal EITC
+# - NYC School Tax Credit: $63 single / $125 joint
+#
+# Source: https://www.tax.ny.gov/pit/credits/new_york_city_credits.htm
+
+imports:
+  federal_eitc: cosilico-us:statute/26/32/a/1/earned_income_credit
+  filing_status: cosilico-us:statute/26/1/filing_status
+  household_income: statute/nyc/household_income
+  is_nyc_resident: statute/nyc/is_nyc_resident
+  is_claimed_as_dependent: cosilico-us:statute/26/152/c/is_qualifying_child
+
+parameters:
+  # NYC EITC percentage (5% of federal)
+  nyc_eitc_percentage: 0.05
+
+  # School tax credit amounts
+  school_tax_credit_single: 63
+  school_tax_credit_joint: 125
+  school_tax_credit_income_limit: 250000
+
+# NYC Earned Income Credit
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NYC Earned Income Credit"
+description "NYC EITC equal to 5% of federal EITC"
+refundable: true
+
+formula:
+  if not is_nyc_resident then
+    return 0
+
+  # NYC EITC = 5% of federal EITC
+  return federal_eitc * nyc_eitc_percentage
+
+defined_for:
+  is_nyc_resident AND federal_eitc > 0
+
+default 0
+
+
+# NYC School Tax Credit
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NYC School Tax Credit"
+description "NYC school tax credit for NYC residents"
+refundable: false
+
+formula:
+  # Must be NYC resident and not claimed as dependent
+  if not is_nyc_resident then
+    return 0
+
+  if is_claimed_as_dependent then
+    return 0
+
+  # Income limit of $250,000
+  if household_income >= school_tax_credit_income_limit then
+    return 0
+
+  # Credit amount based on filing status
+  match filing_status {
+    MARRIED_FILING_JOINTLY => school_tax_credit_joint
+    QUALIFYING_WIDOW => school_tax_credit_joint
+    _ => school_tax_credit_single
+  }
+
+defined_for:
+  is_nyc_resident AND NOT is_claimed_as_dependent AND household_income < 250000
+
+default 0

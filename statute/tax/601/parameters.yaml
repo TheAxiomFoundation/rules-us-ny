@@ -1,0 +1,77 @@
+# NY Tax Law § 601 - Income Tax Bracket Thresholds
+#
+# These thresholds define the NY taxable income levels at which
+# each marginal tax rate begins. Values are for tax year 2024.
+#
+# Source: https://www.tax.ny.gov/pit/file/tax-tables/2024.htm
+#
+# Note: For NY AGI > $107,650, taxpayers must use the tax computation
+# worksheet rather than the tax tables. This results in a slightly
+# different calculation that phases out lower bracket benefits.
+
+variable: ny_income_tax_thresholds
+entity: TaxUnit
+period: Year
+
+# Tax rates (fixed in statute)
+rates:
+  - 0.04      # 4%
+  - 0.045     # 4.5%
+  - 0.0525    # 5.25%
+  - 0.055     # 5.5%
+  - 0.06      # 6%
+  - 0.0685    # 6.85%
+  - 0.0965    # 9.65%
+  - 0.103     # 10.3%
+  - 0.109     # 10.9%
+
+# Bracket thresholds by filing status for 2024
+# Each threshold is the income level where that rate BEGINS
+2024:
+  single:
+    0.04: 0
+    0.045: 8500
+    0.0525: 11700
+    0.055: 13900
+    0.06: 80650
+    0.0685: 215400
+    0.0965: 1077550
+    0.103: 5000000
+    0.109: 25000000
+
+  married_filing_jointly:
+    0.04: 0
+    0.045: 17150
+    0.0525: 23600
+    0.055: 27900
+    0.06: 161550
+    0.0685: 323200
+    0.0965: 2155350
+    0.103: 5000000
+    0.109: 25000000
+
+  head_of_household:
+    0.04: 0
+    0.045: 12800
+    0.0525: 17650
+    0.055: 20900
+    0.06: 107650
+    0.0685: 269300
+    0.0965: 1616450
+    0.103: 5000000
+    0.109: 25000000
+
+  married_filing_separately:
+    0.04: 0
+    0.045: 8500
+    0.0525: 11700
+    0.055: 13900
+    0.06: 80650
+    0.0685: 161600
+    0.0965: 1077550
+    0.103: 2500000
+    0.109: 12500000
+
+# Supplemental tax threshold (applies to all filers)
+supplemental_tax_agi_threshold:
+  2024: 107650
