@@ -1,0 +1,60 @@
+# NY Tax Law Section 606(b) - Household Credit
+#
+# The household credit is an alternative to the EITC for NYS taxpayers
+# with low-to-moderate income. Most EITC recipients do not claim this
+# as the EITC is typically more valuable.
+#
+# The household credit reduces the NY EITC for those who claim it.
+#
+# Source: https://www.tax.ny.gov/pit/credits/household_credit.htm
+# Statute: https://www.nysenate.gov/legislation/laws/TAX/606
+
+imports:
+  filing_status: cosilico-us:statute/26/1/filing_status
+  ny_agi: statute/tax/612/ny_agi
+
+parameters:
+  # Credit amounts by filing status
+  credit_single: parameters#household_credit.single
+  credit_joint: parameters#household_credit.married_filing_jointly
+  credit_hoh: parameters#household_credit.head_of_household
+  credit_separate: parameters#household_credit.married_filing_separately
+
+  # Income limits
+  income_limit_single: parameters#household_credit.income_limits.single
+  income_limit_joint: parameters#household_credit.income_limits.married_filing_jointly
+
+# NY Household Credit
+entity TaxUnit
+period Year
+dtype Money
+unit "USD"
+label "NY Household Credit"
+description "New York household credit per Tax Law Section 606(b)"
+refundable: false
+
+formula:
+  # Determine income limit based on filing status
+  income_limit = match filing_status {
+    MARRIED_FILING_JOINTLY => income_limit_joint
+    QUALIFYING_WIDOW => income_limit_joint
+    _ => income_limit_single
+  }
+
+  # No credit if over income limit
+  if ny_agi > income_limit then
+    return 0
+
+  # Credit amount based on filing status
+  match filing_status {
+    SINGLE => credit_single
+    MARRIED_FILING_JOINTLY => credit_joint
+    HEAD_OF_HOUSEHOLD => credit_hoh
+    MARRIED_FILING_SEPARATELY => credit_separate
+    QUALIFYING_WIDOW => credit_joint
+  }
+
+defined_for:
+  ny_agi > 0
+
+default 0
