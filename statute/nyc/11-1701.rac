@@ -1,0 +1,54 @@
+# NYC Admin Code Section 11-1701 - NYC Personal Income Tax
+#
+# Source: https://codelibrary.amlegal.com/codes/newyorkcity/
+
+text: """
+§ 11-1701 Tax imposed. A tax is hereby imposed for each taxable year on the
+city taxable income of every city resident individual, determined in
+accordance with the rates prescribed in the following tables for the
+taxable year.
+
+The NYC income tax applies to NYC residents only, in addition to NY state tax.
+Rates: 3.078%, 3.762%, 3.819%, 3.876%
+"""
+
+# NYC income tax brackets - statutory rates
+parameter nyc_brackets:
+  description: "NYC income tax brackets"
+  values:
+    thresholds:
+      single: [0, 12000, 25000, 50000]
+      married_filing_jointly: [0, 21600, 45000, 90000]
+      married_filing_separately: [0, 12000, 25000, 50000]
+      head_of_household: [0, 14400, 30000, 60000]
+    rates: [0.03078, 0.03762, 0.03819, 0.03876]
+
+variable nyc_income_tax:
+  imports:
+    - cosilico-us:statute/26/1#filing_status
+    - statute/tax/612/ny_taxable_income#ny_taxable_income
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+  unit: "USD"
+  label: "NYC Personal Income Tax"
+  description: "NYC income tax per Admin Code Section 11-1701"
+  formula: |
+    # NYC uses same taxable income base as NYS
+    # Apply marginal tax brackets
+    return marginal_agg(ny_taxable_income, nyc_brackets, threshold_by=filing_status)
+  tests:
+    - name: "Single NYC resident, $40k taxable income"
+      inputs:
+        ny_taxable_income: 40000
+        filing_status: single
+      # 12k at 3.078% + 13k at 3.762% + 15k at 3.819%
+      # = $369.36 + $489.06 + $572.85 = $1,431.27
+      expect: 1431
+    - name: "Joint NYC resident, $80k taxable income"
+      inputs:
+        ny_taxable_income: 80000
+        filing_status: married_filing_jointly
+      # 21.6k at 3.078% + 23.4k at 3.762% + 35k at 3.819%
+      # = $664.85 + $880.31 + $1,336.65 = $2,881.81
+      expect: 2882
