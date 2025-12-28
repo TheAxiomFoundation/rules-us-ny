@@ -1,0 +1,42 @@
+# NY Tax Law Section 606(d) - NY Earned Income Credit
+#
+# Source: https://www.nysenate.gov/legislation/laws/TAX/606
+
+text: """
+§ 606(d) New York State earned income credit. For taxable years
+beginning after two thousand two, a resident individual who is allowed
+the earned income credit under section thirty-two of the internal
+revenue code shall be allowed a credit equal to thirty percent of such
+federal credit.
+"""
+
+# NY EITC rate - 30% of federal EITC
+parameter ny_eitc_rate:
+  description: "NY EITC as percentage of federal EITC"
+  values:
+    2003-01-01: 0.30
+
+variable ny_eitc:
+  imports:
+    - cosilico-us:statute/26/32#eitc as federal_eitc
+  entity: TaxUnit
+  period: Year
+  dtype: Money
+  unit: "USD"
+  label: "New York Earned Income Credit"
+  description: "NY EITC (30% of federal EITC) per Tax Law Section 606(d)"
+  formula: |
+    return federal_eitc * ny_eitc_rate
+  tests:
+    - name: "30% of federal EITC"
+      inputs:
+        federal_eitc: 3000
+      expect: 900
+    - name: "No federal EITC"
+      inputs:
+        federal_eitc: 0
+      expect: 0
+    - name: "Maximum federal EITC (3+ kids)"
+      inputs:
+        federal_eitc: 7430
+      expect: 2229
