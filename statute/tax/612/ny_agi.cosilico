@@ -14,12 +14,12 @@
 # Source: https://www.nysenate.gov/legislation/laws/TAX/612
 
 imports:
-  federal_agi: cosilico-us:statute/26/62/a/adjusted_gross_income
-  social_security_income: cosilico-us:statute/42/social_security_income
-  pension_income: cosilico-us:inputs/pension_income
-  us_government_interest: cosilico-us:inputs/us_government_interest
-  out_of_state_municipal_interest: cosilico-us:inputs/out_of_state_municipal_interest
-  age: cosilico-us:inputs/age
+  federal_agi: rac-us:statute/26/62/a/adjusted_gross_income
+  social_security_income: rac-us:statute/42/social_security_income
+  pension_income: rac-us:inputs/pension_income
+  us_government_interest: rac-us:inputs/us_government_interest
+  out_of_state_municipal_interest: rac-us:inputs/out_of_state_municipal_interest
+  age: rac-us:inputs/age
 
 parameters:
   pension_exclusion_amount: parameters#subtractions.pension_exclusion.amount

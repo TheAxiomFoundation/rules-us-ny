@@ -41,7 +41,7 @@ parameter nyc_school_tax_credit_income_limit:
 
 variable nyc_eitc:
   imports:
-    - cosilico-us:statute/26/32#eitc as federal_eitc
+    - rac-us:statute/26/32#eitc as federal_eitc
   entity: TaxUnit
   period: Year
   dtype: Money
@@ -63,7 +63,7 @@ variable nyc_eitc:
 
 variable nyc_school_tax_credit:
   imports:
-    - cosilico-us:statute/26/1#filing_status
+    - rac-us:statute/26/1#filing_status
     - statute/tax/612/ny_taxable_income#ny_taxable_income
   entity: TaxUnit
   period: Year

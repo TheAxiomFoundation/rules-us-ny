@@ -1,42 +1,42 @@
-# cosilico-us-ny
+# rac-us-ny
 
 **New York State tax and benefit statute encodings.**
 
-All NY-specific .cosilico files belong here, NOT in cosilico-engine or cosilico-us.
+All NY-specific .rac files belong here, NOT in rac-compile or rac-us.
 
 ## Structure
 
 Files organized under `statute/` by law type and section:
 
 ```
-cosilico-us-ny/
+rac-us-ny/
 ├── statute/               # All enacted statutes
 │   ├── tax/              # NY Tax Law (Article 22 - Personal Income Tax)
 │   │   ├── 601/          # Section 601 - Personal Income Tax Rates
-│   │   │   ├── income_tax.cosilico
+│   │   │   ├── income_tax.rac
 │   │   │   └── parameters.yaml
 │   │   ├── 606/          # Section 606 - Tax Credits
-│   │   │   ├── b/ny_eitc.cosilico          # NY EITC (30% of federal)
-│   │   │   ├── c/empire_state_child_credit.cosilico
-│   │   │   ├── household_credit.cosilico   # Section 606(b)
+│   │   │   ├── b/ny_eitc.rac          # NY EITC (30% of federal)
+│   │   │   ├── c/empire_state_child_credit.rac
+│   │   │   ├── household_credit.rac   # Section 606(b)
 │   │   │   └── parameters.yaml
 │   │   ├── 612/          # Section 612 - NY AGI Modifications
-│   │   │   ├── ny_agi.cosilico
-│   │   │   ├── ny_taxable_income.cosilico
+│   │   │   ├── ny_agi.rac
+│   │   │   ├── ny_taxable_income.rac
 │   │   │   └── parameters.yaml
 │   │   └── 614/          # Section 614 - Standard Deduction
-│   │       ├── standard_deduction.cosilico
+│   │       ├── standard_deduction.rac
 │   │       └── parameters.yaml
 │   │
 │   └── nyc/              # NYC Administrative Code Title 11
 │       ├── 1701/         # Section 11-1701 - NYC Income Tax
-│       │   ├── income_tax.cosilico
+│       │   ├── income_tax.rac
 │       │   └── parameters.yaml
 │       ├── 1706/         # Section 11-1706 - NYC Credits
-│       │   ├── credits.cosilico   # NYC EITC (5%) and School Tax Credit
+│       │   ├── credits.rac   # NYC EITC (5%) and School Tax Credit
 │       │   └── parameters.yaml
-│       ├── is_nyc_resident.cosilico
-│       └── nyc_taxable_income.cosilico
+│       ├── is_nyc_resident.rac
+│       └── nyc_taxable_income.rac
 │
 └── tests/                # Validation test cases
     └── integration/
@@ -92,15 +92,15 @@ cosilico-us-ny/
 - $63 single / $125 joint for incomes under $250,000
 - Non-refundable credit for NYC residents
 
-## References in .cosilico files
+## References in .rac files
 
 Cross-repo references use full paths:
 ```
 references {
-  # Federal inputs from cosilico-us
-  federal_eitc: cosilico-us:statute/26/32/a/1/earned_income_credit
-  federal_agi: cosilico-us:statute/26/62/a/adjusted_gross_income
-  federal_ctc: cosilico-us:statute/26/24/child_tax_credit
+  # Federal inputs from rac-us
+  federal_eitc: rac-us:statute/26/32/a/1/earned_income_credit
+  federal_agi: rac-us:statute/26/62/a/adjusted_gross_income
+  federal_ctc: rac-us:statute/26/24/child_tax_credit
 
   # Intra-repo references
   ny_agi: statute/tax/612/ny_agi
@@ -110,15 +110,15 @@ references {
 
 ## File Types
 
-- `.cosilico` - Executable formulas (compile to Python/JS/WASM)
+- `.rac` - Executable formulas (compile to Python/JS/WASM)
 - `parameters.yaml` - Time-varying values (rates, thresholds, brackets)
 - `tests.yaml` - Validation test cases
 
 ## Related Repos
 
-- **cosilico-us** - Federal tax/benefit statute encodings (inputs to state calculations)
-- **cosilico-engine** - DSL compiler and runtime
-- **cosilico-validators** - Validation against external calculators
+- **rac-us** - Federal tax/benefit statute encodings (inputs to state calculations)
+- **rac-compile** - DSL compiler and runtime
+- **rac-validators** - Validation against external calculators
 
 ## Official Sources
 

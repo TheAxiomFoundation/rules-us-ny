@@ -7,11 +7,11 @@
 # Source: https://www.tax.ny.gov/pit/credits/new_york_city_credits.htm
 
 imports:
-  federal_eitc: cosilico-us:statute/26/32/a/1/earned_income_credit
-  filing_status: cosilico-us:statute/26/1/filing_status
+  federal_eitc: rac-us:statute/26/32/a/1/earned_income_credit
+  filing_status: rac-us:statute/26/1/filing_status
   household_income: statute/nyc/household_income
   is_nyc_resident: statute/nyc/is_nyc_resident
-  is_claimed_as_dependent: cosilico-us:statute/26/152/c/is_qualifying_child
+  is_claimed_as_dependent: rac-us:statute/26/152/c/is_qualifying_child
 
 parameters:
   # NYC EITC percentage (5% of federal)

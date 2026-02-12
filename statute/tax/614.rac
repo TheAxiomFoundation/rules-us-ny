@@ -25,7 +25,7 @@ parameter ny_standard_deduction:
 
 variable ny_standard_deduction:
   imports:
-    - cosilico-us:statute/26/1#filing_status
+    - rac-us:statute/26/1#filing_status
   entity: TaxUnit
   period: Year
   dtype: Money

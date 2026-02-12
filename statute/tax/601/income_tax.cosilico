@@ -13,7 +13,7 @@ imports:
   # NY taxable income = NY AGI - (standard or itemized deduction)
   ny_taxable_income: statute/tax/612/ny_taxable_income
   ny_agi: statute/tax/612/ny_agi
-  filing_status: cosilico-us:statute/26/1/filing_status
+  filing_status: rac-us:statute/26/1/filing_status
 
 parameters:
   # Tax rates are fixed in statute

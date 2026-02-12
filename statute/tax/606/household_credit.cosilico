@@ -10,7 +10,7 @@
 # Statute: https://www.nysenate.gov/legislation/laws/TAX/606
 
 imports:
-  filing_status: cosilico-us:statute/26/1/filing_status
+  filing_status: rac-us:statute/26/1/filing_status
   ny_agi: statute/tax/612/ny_agi
 
 parameters:

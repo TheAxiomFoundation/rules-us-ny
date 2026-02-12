@@ -18,7 +18,7 @@ parameter ny_eitc_rate:
 
 variable ny_eitc:
   imports:
-    - cosilico-us:statute/26/32#eitc as federal_eitc
+    - rac-us:statute/26/32#eitc as federal_eitc
   entity: TaxUnit
   period: Year
   dtype: Money

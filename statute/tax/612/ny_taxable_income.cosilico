@@ -8,7 +8,7 @@ imports:
   ny_agi: statute/tax/612/ny_agi
   ny_standard_deduction: statute/tax/614/standard_deduction
   ny_itemized_deductions: statute/tax/615/ny_itemized_deductions
-  uses_standard_deduction: cosilico-us:statute/26/63/uses_standard_deduction
+  uses_standard_deduction: rac-us:statute/26/63/e/uses_standard_deduction
 
 # NY Taxable Income
 entity TaxUnit

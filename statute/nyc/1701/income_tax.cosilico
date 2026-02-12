@@ -11,7 +11,7 @@
 imports:
   # NYC taxable income (same base as NY taxable income for residents)
   nyc_taxable_income: statute/nyc/1701/nyc_taxable_income
-  filing_status: cosilico-us:statute/26/1/filing_status
+  filing_status: rac-us:statute/26/1/filing_status
   is_nyc_resident: statute/nyc/is_nyc_resident
 
 parameters:

@@ -46,7 +46,7 @@ parameter federal_ctc_2017_per_child:
 
 variable empire_state_child_credit:
   imports:
-    - cosilico-us:statute/26/1#filing_status
+    - rac-us:statute/26/1#filing_status
   entity: TaxUnit
   period: Year
   dtype: Money

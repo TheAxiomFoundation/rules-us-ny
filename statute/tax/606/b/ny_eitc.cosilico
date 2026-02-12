@@ -10,8 +10,8 @@
 # Statute: https://www.nysenate.gov/legislation/laws/TAX/606
 
 imports:
-  # Federal EITC from cosilico-us
-  federal_eitc: cosilico-us:statute/26/32/a/1/earned_income_credit
+  # Federal EITC from rac-us
+  federal_eitc: rac-us:statute/26/32/a/1/earned_income_credit
   ny_household_credit: statute/tax/606/household_credit
 
 parameters:

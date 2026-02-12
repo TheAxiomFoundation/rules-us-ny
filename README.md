@@ -1,10 +1,10 @@
-# cosilico-us-ny
+# rac-us-ny
 
-New York State tax and benefit statute encodings for the Cosilico platform.
+New York State tax and benefit statute encodings for the Rules Foundation platform.
 
 ## Overview
 
-This repository contains machine-readable encodings of New York State tax law and benefit programs. It builds on federal calculations from `cosilico-us`.
+This repository contains machine-readable encodings of New York State tax law and benefit programs. It builds on federal calculations from `rac-us`.
 
 ## Coverage
 
@@ -22,10 +22,10 @@ This repository contains machine-readable encodings of New York State tax law an
 ## Usage
 
 ```python
-from cosilico import load_repo
+from rac import load_repo
 
 # Load NY statutes
-ny = load_repo("cosilico-us-ny")
+ny = load_repo("rac-us-ny")
 
 # Calculate NY income tax
 situation = {
@@ -56,7 +56,7 @@ statute/
 
 ### Prerequisites
 - Python 3.11+
-- cosilico-engine
+- rac-compile
 
 ### Issue Tracking
 ```bash
