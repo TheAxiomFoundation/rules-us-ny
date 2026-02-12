@@ -9,8 +9,8 @@
 # Source: https://www.nysenate.gov/legislation/laws/TAX/614
 
 imports:
-  filing_status: cosilico-us:statute/26/1/filing_status
-  is_dependent: cosilico-us:statute/26/152/c/is_qualifying_child
+  filing_status: rac-us:statute/26/1/filing_status
+  is_dependent: rac-us:statute/26/152/c/is_qualifying_child
 
 parameters:
   # Standard deduction amounts by filing status (from parameters.yaml)

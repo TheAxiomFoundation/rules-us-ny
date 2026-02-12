@@ -60,8 +60,8 @@ parameter household_credit_income_limit_mfs:
 
 variable household_credit:
   imports:
-    - cosilico-us:statute/26/1#filing_status
-    - cosilico-us:statute/26/62/a#adjusted_gross_income as federal_agi
+    - rac-us:statute/26/1#filing_status
+    - rac-us:statute/26/62/a#adjusted_gross_income as federal_agi
   entity: TaxUnit
   period: Year
   dtype: Money

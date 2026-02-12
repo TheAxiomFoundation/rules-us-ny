@@ -27,8 +27,8 @@ parameter ny_brackets:
 
 variable ny_income_tax:
   imports:
-    - cosilico-us:statute/26/62/a#adjusted_gross_income as federal_agi
-    - cosilico-us:statute/26/1#filing_status
+    - rac-us:statute/26/62/a#adjusted_gross_income as federal_agi
+    - rac-us:statute/26/1#filing_status
     - statute/tax/614#ny_standard_deduction
   entity: TaxUnit
   period: Year

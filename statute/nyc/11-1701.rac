@@ -25,7 +25,7 @@ parameter nyc_brackets:
 
 variable nyc_income_tax:
   imports:
-    - cosilico-us:statute/26/1#filing_status
+    - rac-us:statute/26/1#filing_status
     - statute/tax/612/ny_taxable_income#ny_taxable_income
   entity: TaxUnit
   period: Year
