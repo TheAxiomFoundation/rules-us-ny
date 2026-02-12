@@ -1,0 +1,15 @@
+# Tests for 606/d.rac
+
+tests:
+    - name: "30% of federal EITC"
+      inputs:
+        federal_eitc: 3000
+      expect: 900
+    - name: "No federal EITC"
+      inputs:
+        federal_eitc: 0
+      expect: 0
+    - name: "Maximum federal EITC (3+ kids)"
+      inputs:
+        federal_eitc: 7430
+      expect: 2229

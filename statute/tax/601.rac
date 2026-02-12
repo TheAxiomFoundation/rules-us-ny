@@ -2,8 +2,8 @@
 #
 # Source: https://www.nysenate.gov/legislation/laws/TAX/601
 
-text: """
-§ 601. Tax imposed. (a) Resident individuals. A tax is hereby imposed
+"""
+Section 601. Tax imposed. (a) Resident individuals. A tax is hereby imposed
 for each taxable year on the New York taxable income of every resident
 individual at the rates set forth in section six hundred three of this
 article.
@@ -12,20 +12,19 @@ article.
 # New York income tax brackets (base statutory values)
 # Rates range from 4% to 10.9%
 # Thresholds vary by filing status
-parameter ny_brackets:
+ny_brackets:
   description: "NY income tax brackets"
   indexed_by: statute/tax/603
-  values:
-    # 2024 base thresholds
-    thresholds:
-      single: [0, 8500, 11700, 13900, 80650, 215400, 1077550, 5000000, 25000000]
-      married_filing_jointly: [0, 17150, 23600, 27900, 161550, 323200, 2155350, 5000000, 25000000]
-      married_filing_separately: [0, 8500, 11700, 13900, 80650, 161600, 1077550, 2500000, 12500000]
-      head_of_household: [0, 12800, 17650, 20900, 107650, 269300, 1616450, 5000000, 25000000]
-    # Rates are statutory
-    rates: [0.04, 0.045, 0.0525, 0.055, 0.06, 0.0685, 0.0965, 0.103, 0.109]
+  # 2024 base thresholds
+  thresholds:
+    single: [0, 8500, 11700, 13900, 80650, 215400, 1077550, 5000000, 25000000]
+    married_filing_jointly: [0, 17150, 23600, 27900, 161550, 323200, 2155350, 5000000, 25000000]
+    married_filing_separately: [0, 8500, 11700, 13900, 80650, 161600, 1077550, 2500000, 12500000]
+    head_of_household: [0, 12800, 17650, 20900, 107650, 269300, 1616450, 5000000, 25000000]
+  # Rates are statutory
+  rates: [0.04, 0.045, 0.0525, 0.055, 0.06, 0.0685, 0.0965, 0.103, 0.109]
 
-variable ny_income_tax:
+ny_income_tax:
   imports:
     - rac-us:statute/26/62/a#adjusted_gross_income as federal_agi
     - rac-us:statute/26/1#filing_status
@@ -36,7 +35,7 @@ variable ny_income_tax:
   unit: "USD"
   label: "New York State Income Tax"
   description: "NY personal income tax per Tax Law Section 601"
-  formula: |
+  from 2024-01-01:
     # NY AGI modifications would be applied here
     ny_agi = federal_agi  # Simplified - full version has add-backs/subtractions
 
@@ -45,20 +44,3 @@ variable ny_income_tax:
 
     # Apply marginal tax brackets
     return marginal_agg(ny_taxable_income, ny_brackets, threshold_by=filing_status)
-  tests:
-    - name: "Single filer, $50k AGI"
-      period: 2024-01
-      inputs:
-        federal_agi: 50000
-        filing_status: single
-        ny_standard_deduction: 8000
-      # Taxable = $42,000
-      expect: 2316
-    - name: "Joint filers, $100k AGI"
-      period: 2024-01
-      inputs:
-        federal_agi: 100000
-        filing_status: married_filing_jointly
-        ny_standard_deduction: 16050
-      # Taxable = $83,950
-      expect: 4361
