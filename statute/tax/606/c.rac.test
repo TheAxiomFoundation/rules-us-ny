@@ -1,0 +1,16 @@
+# Tests for 606/c.rac
+
+tests:
+    - name: "One child, 33% of federal"
+      inputs:
+        qualifying_children: 1
+      # Max of $100 or $330 (33% of $1000) = $330
+      expect: 330
+    - name: "Three children"
+      inputs:
+        qualifying_children: 3
+      expect: 990
+    - name: "No children"
+      inputs:
+        qualifying_children: 0
+      expect: 0

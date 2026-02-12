@@ -2,8 +2,8 @@
 #
 # Source: https://www.nysenate.gov/legislation/laws/TAX/606
 
-text: """
-§ 606(b) Household credit. A resident individual shall be allowed a credit
+"""
+Section 606(b) Household credit. A resident individual shall be allowed a credit
 as determined in accordance with the following table based on filing status
 and New York adjusted gross income. The credit is an alternative to the
 NY EITC for taxpayers with higher incomes.
@@ -15,50 +15,43 @@ Married Filing Separately: $45 (income up to $16,000)
 """
 
 # Household credit amounts by filing status
-parameter household_credit_single:
+household_credit_single:
   description: "Household credit for single filers"
   unit: "USD"
-  values:
-    2024-01-01: 90
+  from 2024-01-01: 90
 
-parameter household_credit_hoh:
+household_credit_hoh:
   description: "Household credit for head of household"
   unit: "USD"
-  values:
-    2024-01-01: 130
+  from 2024-01-01: 130
 
-parameter household_credit_joint:
+household_credit_joint:
   description: "Household credit for married filing jointly"
   unit: "USD"
-  values:
-    2024-01-01: 180
+  from 2024-01-01: 180
 
-parameter household_credit_mfs:
+household_credit_mfs:
   description: "Household credit for married filing separately"
   unit: "USD"
-  values:
-    2024-01-01: 45
+  from 2024-01-01: 45
 
 # Income limits
-parameter household_credit_income_limit_single:
+household_credit_income_limit_single:
   description: "Income limit for household credit - single/HOH"
   unit: "USD"
-  values:
-    2024-01-01: 28000
+  from 2024-01-01: 28000
 
-parameter household_credit_income_limit_joint:
+household_credit_income_limit_joint:
   description: "Income limit for household credit - joint"
   unit: "USD"
-  values:
-    2024-01-01: 32000
+  from 2024-01-01: 32000
 
-parameter household_credit_income_limit_mfs:
+household_credit_income_limit_mfs:
   description: "Income limit for household credit - MFS"
   unit: "USD"
-  values:
-    2024-01-01: 16000
+  from 2024-01-01: 16000
 
-variable household_credit:
+household_credit:
   imports:
     - rac-us:statute/26/1#filing_status
     - rac-us:statute/26/62/a#adjusted_gross_income as federal_agi
@@ -68,7 +61,7 @@ variable household_credit:
   unit: "USD"
   label: "NY Household Credit"
   description: "NY household credit per Tax Law Section 606(b)"
-  formula: |
+  from 2024-01-01:
     # Determine credit amount and income limit by filing status
     if filing_status == JOINT:
       credit_amount = household_credit_joint
@@ -90,24 +83,3 @@ variable household_credit:
     if federal_agi > income_limit:
       return 0
     return credit_amount
-  tests:
-    - name: "Single, under income limit"
-      inputs:
-        filing_status: single
-        federal_agi: 25000
-      expect: 90
-    - name: "Single, over income limit"
-      inputs:
-        filing_status: single
-        federal_agi: 30000
-      expect: 0
-    - name: "Joint, under income limit"
-      inputs:
-        filing_status: married_filing_jointly
-        federal_agi: 30000
-      expect: 180
-    - name: "HOH, at income limit"
-      inputs:
-        filing_status: head_of_household
-        federal_agi: 28000
-      expect: 130

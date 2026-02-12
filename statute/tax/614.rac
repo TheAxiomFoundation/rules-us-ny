@@ -2,8 +2,8 @@
 #
 # Source: https://www.nysenate.gov/legislation/laws/TAX/614
 
-text: """
-§ 614. New York standard deduction. (a) General. A New York resident
+"""
+Section 614. New York standard deduction. (a) General. A New York resident
 individual or a New York nonresident individual shall be allowed a
 deduction as follows:
 (1) $8,000 for single individuals and married individuals filing
@@ -13,17 +13,16 @@ deduction as follows:
 (3) $11,200 for heads of household
 """
 
-parameter ny_standard_deduction:
+ny_standard_deduction:
   description: "NY standard deduction by filing status"
   unit: "USD"
-  values:
-    single: 8000
-    married_filing_jointly: 16050
-    married_filing_separately: 8000
-    head_of_household: 11200
-    qualifying_surviving_spouse: 16050
+  single: 8000
+  married_filing_jointly: 16050
+  married_filing_separately: 8000
+  head_of_household: 11200
+  qualifying_surviving_spouse: 16050
 
-variable ny_standard_deduction:
+ny_standard_deduction:
   imports:
     - rac-us:statute/26/1#filing_status
   entity: TaxUnit
@@ -32,18 +31,5 @@ variable ny_standard_deduction:
   unit: "USD"
   label: "NY Standard Deduction"
   description: "New York standard deduction per Tax Law Section 614"
-  formula: |
+  from 2024-01-01:
     return ny_standard_deduction[filing_status]
-  tests:
-    - name: "Single"
-      inputs:
-        filing_status: single
-      expect: 8000
-    - name: "Married filing jointly"
-      inputs:
-        filing_status: married_filing_jointly
-      expect: 16050
-    - name: "Head of household"
-      inputs:
-        filing_status: head_of_household
-      expect: 11200

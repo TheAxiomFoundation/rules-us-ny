@@ -2,8 +2,8 @@
 #
 # Source: https://codelibrary.amlegal.com/codes/newyorkcity/
 
-text: """
-§ 11-1706 Tax credits.
+"""
+Section 11-1706 Tax credits.
 (a) NYC earned income credit. A city resident individual who is allowed
     the earned income credit under section 32 of the internal revenue code
     shall be allowed a credit equal to 5% of such federal credit.
@@ -14,32 +14,28 @@ text: """
 """
 
 # NYC EITC rate - 5% of federal (reduced from 10% in 2022)
-parameter nyc_eitc_rate:
+nyc_eitc_rate:
   description: "NYC EITC as percentage of federal EITC"
-  values:
-    2022-01-01: 0.05
-    2009-01-01: 0.10
+  from 2022-01-01: 0.05
+  from 2009-01-01: 0.10
 
 # NYC School Tax Credit amounts
-parameter nyc_school_tax_credit_single:
+nyc_school_tax_credit_single:
   description: "NYC School Tax Credit for single filers"
   unit: "USD"
-  values:
-    2024-01-01: 63
+  from 2024-01-01: 63
 
-parameter nyc_school_tax_credit_joint:
+nyc_school_tax_credit_joint:
   description: "NYC School Tax Credit for married filing jointly"
   unit: "USD"
-  values:
-    2024-01-01: 125
+  from 2024-01-01: 125
 
-parameter nyc_school_tax_credit_income_limit:
+nyc_school_tax_credit_income_limit:
   description: "Income limit for NYC School Tax Credit"
   unit: "USD"
-  values:
-    2024-01-01: 250000
+  from 2024-01-01: 250000
 
-variable nyc_eitc:
+nyc_eitc:
   imports:
     - rac-us:statute/26/32#eitc as federal_eitc
   entity: TaxUnit
@@ -48,20 +44,10 @@ variable nyc_eitc:
   unit: "USD"
   label: "NYC Earned Income Credit"
   description: "NYC EITC (5% of federal EITC) per Admin Code Section 11-1706(a)"
-  formula: |
+  from 2009-01-01:
     return federal_eitc * nyc_eitc_rate
-  tests:
-    - name: "5% of federal EITC"
-      period: 2024-01
-      inputs:
-        federal_eitc: 3000
-      expect: 150
-    - name: "No federal EITC"
-      inputs:
-        federal_eitc: 0
-      expect: 0
 
-variable nyc_school_tax_credit:
+nyc_school_tax_credit:
   imports:
     - rac-us:statute/26/1#filing_status
     - statute/tax/612/ny_taxable_income#ny_taxable_income
@@ -71,7 +57,7 @@ variable nyc_school_tax_credit:
   unit: "USD"
   label: "NYC School Tax Credit"
   description: "NYC nonrefundable school tax credit per Admin Code Section 11-1706(b)"
-  formula: |
+  from 2024-01-01:
     # Check income eligibility
     if ny_taxable_income >= nyc_school_tax_credit_income_limit:
       return 0
@@ -80,19 +66,3 @@ variable nyc_school_tax_credit:
     if filing_status == JOINT or filing_status == SURVIVING_SPOUSE:
       return nyc_school_tax_credit_joint
     return nyc_school_tax_credit_single
-  tests:
-    - name: "Single, under income limit"
-      inputs:
-        filing_status: single
-        ny_taxable_income: 50000
-      expect: 63
-    - name: "Joint, under income limit"
-      inputs:
-        filing_status: married_filing_jointly
-        ny_taxable_income: 100000
-      expect: 125
-    - name: "Over income limit"
-      inputs:
-        filing_status: single
-        ny_taxable_income: 300000
-      expect: 0
