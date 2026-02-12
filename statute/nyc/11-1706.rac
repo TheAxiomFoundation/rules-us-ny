@@ -2,67 +2,39 @@
 #
 # Source: https://codelibrary.amlegal.com/codes/newyorkcity/
 
-"""
-Section 11-1706 Tax credits.
-(a) NYC earned income credit. A city resident individual who is allowed
-    the earned income credit under section 32 of the internal revenue code
-    shall be allowed a credit equal to 5% of such federal credit.
+# Section 11-1706 Tax credits.
+# (a) NYC earned income credit. A city resident individual who is allowed
+# the earned income credit under section 32 of the internal revenue code
+# shall be allowed a credit equal to 5% of such federal credit.
 
-(b) NYC school tax credit. A city resident individual shall be allowed a
-    nonrefundable credit of $63 for single filers or $125 for married filing
-    jointly, if city taxable income is less than $250,000.
-"""
+# (b) NYC school tax credit. A city resident individual shall be allowed a
+# nonrefundable credit of $63 for single filers or $125 for married filing
+# jointly, if city taxable income is less than $250,000.
 
 # NYC EITC rate - 5% of federal (reduced from 10% in 2022)
-nyc_eitc_rate:
-  description: "NYC EITC as percentage of federal EITC"
-  from 2022-01-01: 0.05
-  from 2009-01-01: 0.10
+variable nyc_eitc_rate:
+    from 2022-01-01: 0.05
+    from 2009-01-01: 0.10
+
 
 # NYC School Tax Credit amounts
-nyc_school_tax_credit_single:
-  description: "NYC School Tax Credit for single filers"
-  unit: "USD"
-  from 2024-01-01: 63
+variable nyc_school_tax_credit_single:
+    from 2024-01-01: 63
 
-nyc_school_tax_credit_joint:
-  description: "NYC School Tax Credit for married filing jointly"
-  unit: "USD"
-  from 2024-01-01: 125
 
-nyc_school_tax_credit_income_limit:
-  description: "Income limit for NYC School Tax Credit"
-  unit: "USD"
-  from 2024-01-01: 250000
+variable nyc_school_tax_credit_joint:
+    from 2024-01-01: 125
 
-nyc_eitc:
-  imports:
-    - rac-us:statute/26/32#eitc as federal_eitc
-  entity: TaxUnit
-  period: Year
-  dtype: Money
-  unit: "USD"
-  label: "NYC Earned Income Credit"
-  description: "NYC EITC (5% of federal EITC) per Admin Code Section 11-1706(a)"
-  from 2009-01-01:
-    return federal_eitc * nyc_eitc_rate
 
-nyc_school_tax_credit:
-  imports:
-    - rac-us:statute/26/1#filing_status
-    - statute/tax/612/ny_taxable_income#ny_taxable_income
-  entity: TaxUnit
-  period: Year
-  dtype: Money
-  unit: "USD"
-  label: "NYC School Tax Credit"
-  description: "NYC nonrefundable school tax credit per Admin Code Section 11-1706(b)"
-  from 2024-01-01:
-    # Check income eligibility
-    if ny_taxable_income >= nyc_school_tax_credit_income_limit:
-      return 0
+variable nyc_school_tax_credit_income_limit:
+    from 2024-01-01: 250000
 
-    # Credit amount by filing status
-    if filing_status == JOINT or filing_status == SURVIVING_SPOUSE:
-      return nyc_school_tax_credit_joint
-    return nyc_school_tax_credit_single
+
+variable nyc_eitc:
+    entity: taxunit
+    from 2009-01-01: federal_eitc * nyc_eitc_rate
+
+
+variable nyc_school_tax_credit:
+    entity: taxunit
+    from 2024-01-01: nyc_school_tax_credit_single
