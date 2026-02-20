@@ -1,0 +1,42 @@
+# NYC Administrative Code Section 11-1706 - Tax Credits
+#
+# NYC provides additional tax credits for NYC residents:
+# - NYC EITC: 5% of federal EITC
+# - NYC School Tax Credit: $63 single / $125 joint
+#
+# Source: https://www.tax.ny.gov/pit/credits/new_york_city_credits.htm
+
+# NYC EITC percentage (5% of federal)
+nyc_eitc_percentage:
+    from 2024-01-01: 0.05
+
+# School tax credit amounts
+nyc_school_tax_credit_single:
+    from 2024-01-01: 63
+
+nyc_school_tax_credit_joint:
+    from 2024-01-01: 125
+
+nyc_school_tax_credit_income_limit:
+    from 2024-01-01: 250000
+
+# NYC Earned Income Credit
+# NYC EITC = 5% of federal EITC (only for NYC residents)
+nyc_earned_income_credit:
+    entity: TaxUnit
+    source: "NYC Admin Code Section 11-1706"
+    label: "NYC earned income credit"
+    from 2024-01-01: if not is_nyc_resident: 0 else: federal_eitc * nyc_eitc_percentage
+
+# School tax credit amount by filing status (joint/QW get $125, others get $63)
+nyc_stc_amount:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: nyc_school_tax_credit_joint else: if filing_status == QUALIFYING_WIDOW: nyc_school_tax_credit_joint else: nyc_school_tax_credit_single
+
+# NYC School Tax Credit
+# Must be NYC resident, not claimed as dependent, income under $250k
+nyc_school_tax_credit:
+    entity: TaxUnit
+    source: "NYC Admin Code Section 11-1706"
+    label: "NYC school tax credit"
+    from 2024-01-01: if not is_nyc_resident: 0 else: if is_claimed_as_dependent: 0 else: if household_income >= nyc_school_tax_credit_income_limit: 0 else: nyc_stc_amount

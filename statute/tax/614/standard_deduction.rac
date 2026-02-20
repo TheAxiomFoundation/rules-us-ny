@@ -1,0 +1,38 @@
+# NY Tax Law Section 614 - Standard Deduction of a Resident Individual
+#
+# "The New York standard deduction of a resident individual shall be:
+# (a) in the case of a husband and wife... sixteen thousand fifty dollars
+# (b) in the case of a head of household... eleven thousand two hundred dollars
+# (c) in the case of an unmarried individual... eight thousand dollars
+# (d) in the case of a married individual filing separately... seven thousand five hundred dollars"
+#
+# Source: https://www.nysenate.gov/legislation/laws/TAX/614
+
+# Standard deduction amounts by filing status
+ny_sd_single:
+    from 2024-01-01: 8000
+
+ny_sd_joint:
+    from 2024-01-01: 16050
+
+ny_sd_hoh:
+    from 2024-01-01: 11200
+
+ny_sd_separate:
+    from 2024-01-01: 7500
+
+ny_sd_dependent:
+    from 2024-01-01: 3100
+
+# Standard deduction by filing status (non-dependents)
+ny_sd_by_status:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_sd_joint else: if filing_status == QUALIFYING_WIDOW: ny_sd_joint else: if filing_status == HEAD_OF_HOUSEHOLD: ny_sd_hoh else: if filing_status == MARRIED_FILING_SEPARATELY: ny_sd_separate else: ny_sd_single
+
+# NY Standard Deduction
+# Section 614: Dependent taxpayers get reduced standard deduction
+ny_standard_deduction:
+    entity: TaxUnit
+    source: "NY Tax Law Section 614"
+    label: "NY standard deduction"
+    from 2024-01-01: if is_dependent: ny_sd_dependent else: ny_sd_by_status

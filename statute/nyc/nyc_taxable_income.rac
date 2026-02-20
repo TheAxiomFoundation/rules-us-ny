@@ -1,0 +1,14 @@
+# NYC Taxable Income
+#
+# For NYC residents, NYC taxable income is the same as NY taxable income.
+# NYC uses the same taxable income base as NYS.
+#
+# Source: NYC Administrative Code Section 11-1712
+
+# NYC Taxable Income
+# NYC uses the same taxable income base as NYS
+nyc_taxable_income:
+    entity: TaxUnit
+    source: "NYC Administrative Code Section 11-1712"
+    label: "NYC taxable income"
+    from 2024-01-01: if is_nyc_resident: ny_taxable_income else: 0

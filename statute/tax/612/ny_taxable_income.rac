@@ -1,0 +1,14 @@
+# NY Tax Law Section 612/614 - New York Taxable Income
+#
+# NY taxable income = NY AGI - (NY standard deduction OR NY itemized deductions)
+#
+# Source: https://www.nysenate.gov/legislation/laws/TAX/612
+
+# NY Taxable Income
+# NY deduction is either standard or itemized (following federal choice)
+# NY taxable income cannot be negative
+ny_taxable_income:
+    entity: TaxUnit
+    source: "NY Tax Law Sections 612-615"
+    label: "NY taxable income"
+    from 2024-01-01: max(0, ny_agi - (if uses_standard_deduction: ny_standard_deduction else: ny_itemized_deductions))

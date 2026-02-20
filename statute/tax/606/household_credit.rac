@@ -1,0 +1,47 @@
+# NY Tax Law Section 606(b) - Household Credit
+#
+# The household credit is an alternative to the EITC for NYS taxpayers
+# with low-to-moderate income. Most EITC recipients do not claim this
+# as the EITC is typically more valuable.
+#
+# The household credit reduces the NY EITC for those who claim it.
+#
+# Source: https://www.tax.ny.gov/pit/credits/household_credit.htm
+# Statute: https://www.nysenate.gov/legislation/laws/TAX/606
+
+# Credit amounts by filing status
+hc_credit_single:
+    from 2024-01-01: 90
+
+hc_credit_joint:
+    from 2024-01-01: 180
+
+hc_credit_hoh:
+    from 2024-01-01: 130
+
+hc_credit_separate:
+    from 2024-01-01: 45
+
+# Income limits
+hc_income_limit_single:
+    from 2024-01-01: 28000
+
+hc_income_limit_joint:
+    from 2024-01-01: 32000
+
+# Income limit based on filing status (joint for MFJ/QW, single otherwise)
+hc_income_limit:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: hc_income_limit_joint else: if filing_status == QUALIFYING_WIDOW: hc_income_limit_joint else: hc_income_limit_single
+
+# Credit amount based on filing status
+hc_credit_amount:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: hc_credit_joint else: if filing_status == QUALIFYING_WIDOW: hc_credit_joint else: if filing_status == HEAD_OF_HOUSEHOLD: hc_credit_hoh else: if filing_status == MARRIED_FILING_SEPARATELY: hc_credit_separate else: hc_credit_single
+
+# NY Household Credit (final, with income limit applied)
+household_credit:
+    entity: TaxUnit
+    source: "NY Tax Law Section 606(b)"
+    label: "NY household credit"
+    from 2024-01-01: if ny_agi > hc_income_limit: 0 else: hc_credit_amount

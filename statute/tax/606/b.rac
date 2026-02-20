@@ -13,35 +13,35 @@
 # Married Filing Separately: $45 (income up to $16,000)
 
 # Household credit amounts by filing status
-variable household_credit_single:
+household_credit_single:
     from 2024-01-01: 90
 
 
-variable household_credit_hoh:
+household_credit_hoh:
     from 2024-01-01: 130
 
 
-variable household_credit_joint:
+household_credit_joint:
     from 2024-01-01: 180
 
 
-variable household_credit_mfs:
+household_credit_mfs:
     from 2024-01-01: 45
 
 
 # Income limits
-variable household_credit_income_limit_single:
+household_credit_income_limit_single:
     from 2024-01-01: 28000
 
 
-variable household_credit_income_limit_joint:
+household_credit_income_limit_joint:
     from 2024-01-01: 32000
 
 
-variable household_credit_income_limit_mfs:
+household_credit_income_limit_mfs:
     from 2024-01-01: 16000
 
 
-variable household_credit:
+household_credit:
     entity: taxunit
     from 2024-01-01: household_credit_single

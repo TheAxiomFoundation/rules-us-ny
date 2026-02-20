@@ -9,10 +9,10 @@
 # federal credit.
 
 # NY EITC rate - 30% of federal EITC
-variable ny_eitc_rate:
+ny_eitc_rate:
     from 2003-01-01: 0.30
 
 
-variable ny_eitc:
+ny_eitc:
     entity: taxunit
     from 2003-01-01: federal_eitc * ny_eitc_rate

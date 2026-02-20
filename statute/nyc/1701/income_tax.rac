@@ -1,0 +1,94 @@
+# NYC Administrative Code Section 11-1701 - Imposition of Tax
+#
+# New York City imposes a separate personal income tax on NYC residents
+# in addition to NYS income tax.
+#
+# NYC has 4 marginal tax brackets: 3.078%, 3.762%, 3.819%, 3.876%
+# The top rate applies at relatively low income levels.
+#
+# Source: https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-5889
+
+# NYC tax rates
+nyc_rate_1:
+    from 2024-01-01: 0.03078
+
+nyc_rate_2:
+    from 2024-01-01: 0.03762
+
+nyc_rate_3:
+    from 2024-01-01: 0.03819
+
+nyc_rate_4:
+    from 2024-01-01: 0.03876
+
+# NYC bracket thresholds for single filers
+nyc_threshold_single_1:
+    from 2024-01-01: 12000
+
+nyc_threshold_single_2:
+    from 2024-01-01: 25000
+
+nyc_threshold_single_3:
+    from 2024-01-01: 50000
+
+# NYC bracket thresholds for joint filers
+nyc_threshold_joint_1:
+    from 2024-01-01: 21600
+
+nyc_threshold_joint_2:
+    from 2024-01-01: 45000
+
+nyc_threshold_joint_3:
+    from 2024-01-01: 90000
+
+# NYC bracket thresholds for HOH filers
+nyc_threshold_hoh_1:
+    from 2024-01-01: 14400
+
+nyc_threshold_hoh_2:
+    from 2024-01-01: 30000
+
+nyc_threshold_hoh_3:
+    from 2024-01-01: 60000
+
+# Select thresholds by filing status (joint for MFJ/QW, HOH for HOH, single otherwise)
+nyc_t1:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: nyc_threshold_joint_1 else: if filing_status == QUALIFYING_WIDOW: nyc_threshold_joint_1 else: if filing_status == HEAD_OF_HOUSEHOLD: nyc_threshold_hoh_1 else: nyc_threshold_single_1
+
+nyc_t2:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: nyc_threshold_joint_2 else: if filing_status == QUALIFYING_WIDOW: nyc_threshold_joint_2 else: if filing_status == HEAD_OF_HOUSEHOLD: nyc_threshold_hoh_2 else: nyc_threshold_single_2
+
+nyc_t3:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: nyc_threshold_joint_3 else: if filing_status == QUALIFYING_WIDOW: nyc_threshold_joint_3 else: if filing_status == HEAD_OF_HOUSEHOLD: nyc_threshold_hoh_3 else: nyc_threshold_single_3
+
+# Bracket tax calculations
+# 3.078% bracket: income from 0 to t1
+nyc_bracket_1_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(nyc_taxable_income, nyc_t1)) * nyc_rate_1
+
+# 3.762% bracket: income from t1 to t2
+nyc_bracket_2_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(nyc_taxable_income, nyc_t2) - nyc_t1) * nyc_rate_2
+
+# 3.819% bracket: income from t2 to t3
+nyc_bracket_3_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(nyc_taxable_income, nyc_t3) - nyc_t2) * nyc_rate_3
+
+# 3.876% bracket: income above t3 (no ceiling)
+nyc_bracket_4_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, nyc_taxable_income - nyc_t3) * nyc_rate_4
+
+# NYC Personal Income Tax
+# Only NYC residents pay NYC income tax
+nyc_income_tax:
+    entity: TaxUnit
+    source: "NYC Administrative Code Section 11-1701"
+    label: "NYC income tax"
+    from 2024-01-01: if not is_nyc_resident: 0 else: nyc_bracket_1_tax + nyc_bracket_2_tax + nyc_bracket_3_tax + nyc_bracket_4_tax

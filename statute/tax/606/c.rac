@@ -11,28 +11,28 @@
 # The credit phases out for incomes above $75,000 (single) or $110,000 (joint).
 
 # Per-child credit amounts
-variable empire_state_child_credit_per_child:
+empire_state_child_credit_per_child:
     from 2018-01-01: 100
 
 
-variable empire_state_child_credit_federal_pct:
+empire_state_child_credit_federal_pct:
     from 2018-01-01: 0.33
 
 
 # Phase-out thresholds
-variable escc_phaseout_single:
+escc_phaseout_single:
     from 2018-01-01: 75000
 
 
-variable escc_phaseout_joint:
+escc_phaseout_joint:
     from 2018-01-01: 110000
 
 
 # 2017 federal CTC parameters (frozen for NY ESCC calculation)
-variable federal_ctc_2017_per_child:
+federal_ctc_2017_per_child:
     from 2017-01-01: 1000
 
 
-variable empire_state_child_credit:
+empire_state_child_credit:
     entity: taxunit
     from 2018-01-01: per_child_amount * qualifying_children

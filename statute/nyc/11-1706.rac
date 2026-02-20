@@ -12,29 +12,29 @@
 # jointly, if city taxable income is less than $250,000.
 
 # NYC EITC rate - 5% of federal (reduced from 10% in 2022)
-variable nyc_eitc_rate:
+nyc_eitc_rate:
     from 2022-01-01: 0.05
     from 2009-01-01: 0.10
 
 
 # NYC School Tax Credit amounts
-variable nyc_school_tax_credit_single:
+nyc_school_tax_credit_single:
     from 2024-01-01: 63
 
 
-variable nyc_school_tax_credit_joint:
+nyc_school_tax_credit_joint:
     from 2024-01-01: 125
 
 
-variable nyc_school_tax_credit_income_limit:
+nyc_school_tax_credit_income_limit:
     from 2024-01-01: 250000
 
 
-variable nyc_eitc:
+nyc_eitc:
     entity: taxunit
     from 2009-01-01: federal_eitc * nyc_eitc_rate
 
 
-variable nyc_school_tax_credit:
+nyc_school_tax_credit:
     entity: taxunit
     from 2024-01-01: nyc_school_tax_credit_single

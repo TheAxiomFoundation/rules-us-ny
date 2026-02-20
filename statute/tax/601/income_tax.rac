@@ -1,0 +1,198 @@
+# NY Tax Law Section 601 - Imposition of Tax
+#
+# "There is hereby imposed for each taxable year on the New York taxable
+# income of every resident individual... a tax determined in accordance
+# with the following rate schedule"
+#
+# New York has 9 marginal tax brackets ranging from 4% to 10.9%.
+#
+# Source: https://www.nysenate.gov/legislation/laws/TAX/601
+
+# Tax rates (fixed in statute)
+ny_rate_1:
+    from 2024-01-01: 0.04
+
+ny_rate_2:
+    from 2024-01-01: 0.045
+
+ny_rate_3:
+    from 2024-01-01: 0.0525
+
+ny_rate_4:
+    from 2024-01-01: 0.055
+
+ny_rate_5:
+    from 2024-01-01: 0.06
+
+ny_rate_6:
+    from 2024-01-01: 0.0685
+
+ny_rate_7:
+    from 2024-01-01: 0.0965
+
+ny_rate_8:
+    from 2024-01-01: 0.103
+
+ny_rate_9:
+    from 2024-01-01: 0.109
+
+# Bracket thresholds for single filers
+ny_threshold_single_1:
+    from 2024-01-01: 8500
+
+ny_threshold_single_2:
+    from 2024-01-01: 11700
+
+ny_threshold_single_3:
+    from 2024-01-01: 13900
+
+ny_threshold_single_4:
+    from 2024-01-01: 80650
+
+ny_threshold_single_5:
+    from 2024-01-01: 215400
+
+ny_threshold_single_6:
+    from 2024-01-01: 1077550
+
+ny_threshold_single_7:
+    from 2024-01-01: 5000000
+
+ny_threshold_single_8:
+    from 2024-01-01: 25000000
+
+# Bracket thresholds for joint filers
+ny_threshold_joint_1:
+    from 2024-01-01: 17150
+
+ny_threshold_joint_2:
+    from 2024-01-01: 23600
+
+ny_threshold_joint_3:
+    from 2024-01-01: 27900
+
+ny_threshold_joint_4:
+    from 2024-01-01: 161550
+
+ny_threshold_joint_5:
+    from 2024-01-01: 323200
+
+ny_threshold_joint_6:
+    from 2024-01-01: 2155350
+
+ny_threshold_joint_7:
+    from 2024-01-01: 5000000
+
+ny_threshold_joint_8:
+    from 2024-01-01: 25000000
+
+# Bracket thresholds for HOH filers
+ny_threshold_hoh_1:
+    from 2024-01-01: 12800
+
+ny_threshold_hoh_2:
+    from 2024-01-01: 17650
+
+ny_threshold_hoh_3:
+    from 2024-01-01: 20900
+
+ny_threshold_hoh_4:
+    from 2024-01-01: 107650
+
+ny_threshold_hoh_5:
+    from 2024-01-01: 269300
+
+ny_threshold_hoh_6:
+    from 2024-01-01: 1616450
+
+ny_threshold_hoh_7:
+    from 2024-01-01: 5000000
+
+ny_threshold_hoh_8:
+    from 2024-01-01: 25000000
+
+# Select thresholds by filing status (joint for MFJ/QW, HOH for HOH, single otherwise)
+ny_t1:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_1 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_1 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_1 else: ny_threshold_single_1
+
+ny_t2:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_2 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_2 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_2 else: ny_threshold_single_2
+
+ny_t3:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_3 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_3 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_3 else: ny_threshold_single_3
+
+ny_t4:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_4 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_4 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_4 else: ny_threshold_single_4
+
+ny_t5:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_5 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_5 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_5 else: ny_threshold_single_5
+
+ny_t6:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_6 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_6 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_6 else: ny_threshold_single_6
+
+ny_t7:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_7 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_7 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_7 else: ny_threshold_single_7
+
+ny_t8:
+    entity: TaxUnit
+    from 2024-01-01: if filing_status == MARRIED_FILING_JOINTLY: ny_threshold_joint_8 else: if filing_status == QUALIFYING_WIDOW: ny_threshold_joint_8 else: if filing_status == HEAD_OF_HOUSEHOLD: ny_threshold_hoh_8 else: ny_threshold_single_8
+
+# Bracket tax amounts (marginal calculation for each bracket)
+# 4% bracket: income from 0 to t1
+ny_bracket_1_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t1)) * ny_rate_1
+
+# 4.5% bracket: income from t1 to t2
+ny_bracket_2_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t2) - ny_t1) * ny_rate_2
+
+# 5.25% bracket: income from t2 to t3
+ny_bracket_3_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t3) - ny_t2) * ny_rate_3
+
+# 5.5% bracket: income from t3 to t4
+ny_bracket_4_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t4) - ny_t3) * ny_rate_4
+
+# 6% bracket: income from t4 to t5
+ny_bracket_5_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t5) - ny_t4) * ny_rate_5
+
+# 6.85% bracket: income from t5 to t6
+ny_bracket_6_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t6) - ny_t5) * ny_rate_6
+
+# 9.65% bracket: income from t6 to t7
+ny_bracket_7_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t7) - ny_t6) * ny_rate_7
+
+# 10.3% bracket: income from t7 to t8
+ny_bracket_8_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, min(ny_taxable_income, ny_t8) - ny_t7) * ny_rate_8
+
+# 10.9% bracket: income above t8 (no ceiling)
+ny_bracket_9_tax:
+    entity: TaxUnit
+    from 2024-01-01: max(0, ny_taxable_income - ny_t8) * ny_rate_9
+
+# NY Personal Income Tax (sum of all brackets)
+ny_income_tax:
+    entity: TaxUnit
+    source: "NY Tax Law Section 601"
+    label: "NY income tax"
+    from 2024-01-01: ny_bracket_1_tax + ny_bracket_2_tax + ny_bracket_3_tax + ny_bracket_4_tax + ny_bracket_5_tax + ny_bracket_6_tax + ny_bracket_7_tax + ny_bracket_8_tax + ny_bracket_9_tax

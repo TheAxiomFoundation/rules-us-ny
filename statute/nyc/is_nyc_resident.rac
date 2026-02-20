@@ -11,19 +11,10 @@
 #
 # Source: NYC Administrative Code Section 11-1705
 
-imports:
-  # Input: Is the taxpayer a NYC resident?
-  is_nyc_resident_input: inputs/is_nyc_resident
-
 # NYC Residency Status
-entity TaxUnit
-period Year
-dtype Boolean
-label "NYC Resident"
-description "Whether the taxpayer is a New York City resident for income tax purposes"
-
-formula:
-  # This is an input variable - user specifies if they are a NYC resident
-  return is_nyc_resident_input
-
-default false
+# This is an input variable - user specifies if they are a NYC resident
+is_nyc_resident:
+    entity: TaxUnit
+    source: "NYC Administrative Code Section 11-1705"
+    label: "NYC resident"
+    from 2024-01-01: false
