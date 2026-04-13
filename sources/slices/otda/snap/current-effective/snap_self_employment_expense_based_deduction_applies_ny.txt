@@ -1,0 +1,15 @@
+New York SNAP self-employment expense treatment under the OTDA SNAP Source
+Book, section 13.H for period 2026-01.
+
+Use monthly SNAP period 2026-01.
+
+New York State Office of Temporary and Disability Assistance, SNAP Source Book,
+Rev. 7/2025, Section 13: Determining Income, section H:
+
+To determine monthly self-employment income, New York excludes the cost of
+producing self-employment income from gross self-employment income when
+averaging or anticipating income.
+
+Model `snap_self_employment_expense_based_deduction_applies` as whether New
+York allows actual self-employment business expenses to be deducted under
+current-effective SNAP policy.
