@@ -1,0 +1,6 @@
+version: 1
+relations:
+  - relation: sets
+    target: cfr/7/273.9/d/6/iii#snap_standard_utility_allowance
+    jurisdiction: NY
+    delegated_from: cfr/7/273.9/d/6/iii
