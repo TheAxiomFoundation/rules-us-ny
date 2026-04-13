@@ -4,7 +4,9 @@ New York State tax and benefit statute encodings for the Rules Foundation platfo
 
 ## Overview
 
-This repository contains machine-readable encodings of New York State tax law and benefit programs. It builds on federal calculations from `rac-us`.
+This repository contains machine-readable encodings of New York State tax law
+and jurisdiction-specific benefit-program overlays. It builds on federal
+calculations from `rac-us`.
 
 ## Coverage
 
@@ -18,6 +20,11 @@ This repository contains machine-readable encodings of New York State tax law an
 - **NYC Income Tax (§ 11-1701)** - 4-bracket city tax (3.078% to 3.876%)
 - **NYC EITC (§ 11-1706)** - 5% of federal earned income credit
 - **School Tax Credit** - $63/$125 for qualifying NYC residents
+
+### State-Administered Benefit Overlays
+- **New York SNAP delegated overlays** - source slices for OTDA utility
+  allowances and state-option treatment, layered on top of the federal SNAP
+  core in `rac-us`
 
 ## Usage
 
@@ -47,9 +54,15 @@ statute/
 │   ├── 606/             # Credits (EITC, ESCC)
 │   └── 614/             # Standard deduction
 │
-└── nyc/                  # NYC Administrative Code
-    ├── 1701/            # NYC income tax
-    └── 1706/            # NYC credits
+├── nyc/                  # NYC Administrative Code
+│   ├── 1701/            # NYC income tax
+│   └── 1706/            # NYC credits
+│
+└── sources/              # NY-administered benefit source slices
+    └── slices/
+        └── otda/
+            └── snap/
+                └── current-effective/
 ```
 
 ## Development

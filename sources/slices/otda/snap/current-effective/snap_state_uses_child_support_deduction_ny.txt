@@ -1,0 +1,16 @@
+New York SNAP child support deduction election under the New York OTDA SNAP
+Source Book, section 13.G.2 for period 2026-01.
+
+Use monthly SNAP period 2026-01.
+
+New York State Office of Temporary and Disability Assistance, SNAP Source Book,
+Rev. 7/2025, Section 13: Determining Income, section G.2.b-c:
+
+Both legally obligated and informal child support payments made by a SNAP
+household member to non-household members are treated as income exclusions.
+Local districts enter total gross income and child support paid, and ABEL
+subtracts the child support payments from total household gross monthly income
+before comparing income to the applicable gross and net income limits.
+
+Model `snap_state_uses_child_support_deduction` as whether New York elects the
+SNAP child-support deduction treatment under this current-effective state policy.

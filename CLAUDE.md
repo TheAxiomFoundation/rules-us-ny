@@ -1,8 +1,8 @@
 # rac-us-ny
 
-**New York State tax and benefit statute encodings.**
+**New York State tax encodings and New York-administered benefit overlays.**
 
-All NY-specific .rac files belong here, NOT in rac-compile or rac-us.
+All NY-specific policy materials belong here, NOT in rac-compile or rac-us.
 
 ## Structure
 
@@ -38,6 +38,11 @@ rac-us-ny/
 │       ├── is_nyc_resident.rac
 │       └── nyc_taxable_income.rac
 │
+├── sources/              # NY-administered source slices
+│   └── slices/
+│       └── otda/
+│           └── snap/
+│               └── current-effective/
 └── tests/                # Validation test cases
     └── integration/
 ```
@@ -119,6 +124,14 @@ references {
 - **rac-us** - Federal tax/benefit statute encodings (inputs to state calculations)
 - **rac-compile** - DSL compiler and runtime
 - **rac-validators** - Validation against external calculators
+
+## Benefit Overlay Policy
+
+- Keep New York-administered SNAP overlays and source slices here, even when
+  they sit on top of federal SNAP law.
+- For delegated state-set or state-option parameters, attach a `*.meta.yaml`
+  sidecar with `relation: sets` pointing at the canonical upstream CFR or USC
+  slot.
 
 ## Official Sources
 
