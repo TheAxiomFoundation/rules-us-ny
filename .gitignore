@@ -51,3 +51,6 @@ htmlcov/
 *.tmp
 *.temp
 *.log
+
+# Local issue tracker state
+.beads/
