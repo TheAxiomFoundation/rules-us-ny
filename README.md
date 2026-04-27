@@ -1,84 +1,16 @@
-# rac-us-ny
+# rules-us-ny
 
-New York State tax and benefit statute encodings for the Rules Foundation platform.
+New York RuleSpec source registry and policy metadata.
 
-## Overview
+## Contents
 
-This repository contains machine-readable encodings of New York State tax law
-and jurisdiction-specific benefit-program overlays. It builds on federal
-calculations from `rac-us`.
+- `sources/slices/otda/snap/current-effective/`: SNAP source slices and sidecar metadata.
+- `statute/tax/*/parameters.yaml`: New York tax parameter tables retained as structured reference data.
+- `statute/nyc/*/parameters.yaml`: New York City tax parameter tables retained as structured reference data.
+- `.github/workflows/ci.yml`: repository guard for legacy executable formula payloads.
 
-## Coverage
+## Conventions
 
-### State Taxes (NY Tax Law)
-- **Personal Income Tax (§ 601)** - 9-bracket progressive tax (4% to 10.9%)
-- **Standard Deduction (§ 614)** - Filing status-based deductions
-- **NY EITC (§ 606(d))** - 30% of federal earned income credit
-- **Empire State Child Credit (§ 606(c))** - Child tax credit for NY residents
+Use RuleSpec YAML for new encoded rules. Keep source text in `sources/slices/` with matching `.meta.yaml` files that record provenance and relations. Large XML or source payloads belong in object storage, with only registry or manifest metadata in Git.
 
-### NYC Taxes (Administrative Code Title 11)
-- **NYC Income Tax (§ 11-1701)** - 4-bracket city tax (3.078% to 3.876%)
-- **NYC EITC (§ 11-1706)** - 5% of federal earned income credit
-- **School Tax Credit** - $63/$125 for qualifying NYC residents
-
-### State-Administered Benefit Overlays
-- **New York SNAP delegated overlays** - source slices for OTDA utility
-  allowances and state-option treatment, layered on top of the federal SNAP
-  core in `rac-us`
-
-## Usage
-
-```python
-from rac import load_repo
-
-# Load NY statutes
-ny = load_repo("rac-us-ny")
-
-# Calculate NY income tax
-situation = {
-    "tax_unit": {
-        "ny_agi": 75000,
-        "filing_status": "SINGLE"
-    }
-}
-
-result = ny.calculate("ny_income_tax", situation, period="2024")
-```
-
-## Structure
-
-```
-statute/
-├── tax/                  # NY Tax Law
-│   ├── 601/             # Income tax rates
-│   ├── 606/             # Credits (EITC, ESCC)
-│   └── 614/             # Standard deduction
-│
-├── nyc/                  # NYC Administrative Code
-│   ├── 1701/            # NYC income tax
-│   └── 1706/            # NYC credits
-│
-└── sources/              # NY-administered benefit source slices
-    └── slices/
-        └── otda/
-            └── snap/
-                └── current-effective/
-```
-
-## Development
-
-### Prerequisites
-- Python 3.11+
-- rac-compile
-
-### Issue Tracking
-```bash
-bd ready                 # Show available work
-bd create "Title" -t task -p 2
-bd update <id> --status in_progress
-bd close <id>
-```
-
-## License
-
-MIT
+Federal materials belong in `rules-us`. New York-administered state and city materials belong here.
