@@ -1,16 +1,18 @@
 # rules-us-ny
 
-New York RuleSpec source registry and policy metadata.
+New York RuleSpec encodings and source registry metadata.
 
 ## Contents
 
-- `sources/slices/otda/snap/current-effective/`: SNAP source slices and sidecar metadata.
-- `statute/tax/*/parameters.yaml`: New York tax parameter tables retained as structured reference data.
-- `statute/nyc/*/parameters.yaml`: New York City tax parameter tables retained as structured reference data.
-- `.github/workflows/ci.yml`: repository guard for legacy executable formula payloads.
+- `statutes/`: New York statute RuleSpec YAML, with tests beside each encoding as `.test.yaml`.
+- `regulations/`: New York regulation RuleSpec YAML, with tests beside each encoding as `.test.yaml`.
+- `policies/`: New York policy RuleSpec YAML, with tests beside each encoding as `.test.yaml`.
+- `sources/`: source registry or manifest metadata when needed.
+- `.github/workflows/repository-checks.yml`: wrapper around the shared RuleSpec validation workflow.
 
 ## Conventions
 
-Use RuleSpec YAML for new encoded rules. Keep source text in `sources/slices/` with matching `.meta.yaml` files that record provenance and relations. Large XML or source payloads belong in object storage, with only registry or manifest metadata in Git.
+Use RuleSpec YAML for encoded rules. Do not add legacy `statute/`,
+`parameters.yaml`, `tests.yaml`, `tests/*.yaml`, or `.rac` artifacts.
 
 Federal materials belong in `rules-us`. New York-administered state and city materials belong here.
