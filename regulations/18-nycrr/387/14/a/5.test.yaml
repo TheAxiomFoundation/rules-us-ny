@@ -1,0 +1,43 @@
+- name: elderly_disabled_household_under_200_percent_fpl_is_categorically_eligible
+  period: 2026-01
+  input: &base_categorical_case
+    us:policies/usda/snap/fy-2026-cola/income-eligibility-standards#input.household_size: 1
+    us:regulations/7-cfr/273/10#input.snap_countable_earned_income: 2600
+    us:regulations/7-cfr/273/10#input.snap_countable_unearned_income: 0
+    us:statutes/7/2012/j#relation.member_of_household:
+      - us:statutes/7/2012/j#input.snap_member_is_elderly_or_disabled: true
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_all_members_receive_family_assistance_nonemergency_safety_net_or_ssi: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_has_out_of_pocket_dependent_care_expenses: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_has_earned_income_budgeted_for_snap: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_disqualified_for_intentional_program_violation: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_failed_periodic_reporting_requirement: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_failed_snap_work_requirements: false
+  output:
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorical_gross_income_limit_200_percent_fpl: 2610
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_elderly_disabled_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#snap_categorically_eligible_for_resource_exemption: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#snap_income_eligible: holds
+
+- name: earned_income_household_under_150_percent_fpl_is_categorically_eligible
+  period: 2026-01
+  input:
+    <<: *base_categorical_case
+    us:regulations/7-cfr/273/10#input.snap_countable_earned_income: 1900
+    us:statutes/7/2012/j#relation.member_of_household:
+      - us:statutes/7/2012/j#input.snap_member_is_elderly_or_disabled: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_has_earned_income_budgeted_for_snap: true
+  output:
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorical_gross_income_limit_150_percent_fpl: 1957.5
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_earned_income_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorically_eligible: holds
+
+- name: disqualification_blocks_categorical_eligibility
+  period: 2026-01
+  input:
+    <<: *base_categorical_case
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_disqualified_for_intentional_program_violation: true
+  output:
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_elderly_disabled_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorical_disqualification_applies: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorically_eligible: not_holds
