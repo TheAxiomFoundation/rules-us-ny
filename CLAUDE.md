@@ -1,15 +1,14 @@
 # rules-us-ny Agent Notes
 
-This repo stores New York RuleSpec encodings and source registry metadata.
+This repo stores New York RuleSpec encodings.
 
 ## Do
 
 - Put RuleSpec encodings under `statutes/`, `regulations/`, or `policies/`.
 - Put tests beside each encoding as `.test.yaml`.
-- Keep only source registry or manifest metadata under `sources/` when needed.
 
 ## Do Not
 
 - Add singular rule roots, separate parameter/test fixture files, or generated formula artifacts.
 - Put federal source slices or federal RuleSpec outputs here; use `rules-us`.
-- Add generated source payloads to Git.
+- Add source text, source registry sidecars, generated source payloads, or extracted document snapshots to Git.

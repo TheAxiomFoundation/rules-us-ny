@@ -1,0 +1,24 @@
+- name: telephone_allowance_applies_when_other_sua_categories_do_not_apply
+  period: 2026-01
+  input:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_heating_cooling_standard_allowance_eligible: false
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_utilities_standard_allowance_eligible: false
+  output:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#snap_telephone_allowance_eligible: holds
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#snap_individual_utility_allowance: 32
+
+- name: heating_cooling_standard_prevents_telephone_allowance
+  period: 2026-01
+  input:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_heating_cooling_standard_allowance_eligible: true
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_utilities_standard_allowance_eligible: false
+  output:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#snap_telephone_allowance_eligible: not_holds
+
+- name: utilities_standard_prevents_telephone_allowance
+  period: 2026-01
+  input:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_heating_cooling_standard_allowance_eligible: false
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.snap_utilities_standard_allowance_eligible: true
+  output:
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#snap_telephone_allowance_eligible: not_holds
