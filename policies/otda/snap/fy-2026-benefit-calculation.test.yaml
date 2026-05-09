@@ -1,6 +1,7 @@
 - name: ongoing_month_derives_new_york_allotment_with_heating_cooling_allowance
   period: 2026-01
   input: &base_snap_case
+    us-ny:regulations/18-nycrr/387/12/f/3/v/c#input.household_incurred_or_anticipated_basic_service_cost_for_one_telephone: false
     us:policies/usda/snap/fy-2026-cola/maximum-allotments#input.household_size: 1
     us:policies/usda/snap/fy-2026-cola/deductions#input.household_size: 1
     us:policies/usda/snap/fy-2026-cola/income-eligibility-standards#input.household_size: 1
