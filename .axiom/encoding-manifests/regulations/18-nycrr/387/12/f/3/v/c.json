@@ -2,36 +2,32 @@
   "applied_files": [
     {
       "path": "regulations/18-nycrr/387/12/f/3/v/c.yaml",
-      "sha256": "a49a1244a8a5b32d27b59089210af0d9239e7c04defe13795a2e241bd5f7f99b"
+      "sha256": "1754c080c0c29db3130edb9e87f8c600e7687b2844fad41ba236ac3fe67888da"
     },
     {
       "path": "regulations/18-nycrr/387/12/f/3/v/c.test.yaml",
       "sha256": "80fbda3255ff7a2c703a665d858359dc030445292df0e9bc0b6328b2865f07ad"
-    },
-    {
-      "path": "policies/otda/snap/fy-2026-benefit-calculation.test.yaml",
-      "sha256": "4250e5e84164885235089606dba4c6f7285b3019a91a95a54f8b3cedff1c8c9a"
     }
   ],
   "axiom_encode_version": "0.2.64",
   "backend": "openai",
   "citation": "us-ny/regulation/18-nycrr/387/12/f/3/v/c",
-  "context_manifest_file": "/tmp/axiom-encode-ny-telephone-11/_eval_workspaces/openai-gpt-5.5/us-ny-regulation-18-nycrr-387-12-f-3-v-c/workspace/context-manifest.json",
-  "context_manifest_sha256": "447216097ab3fb09989809179ceafee0e184fc5e659dc449a7f449135132dca1",
-  "generated_at": "2026-05-09T19:22:36.213704+00:00",
-  "generated_output_file": "/tmp/axiom-encode-ny-telephone-11/openai-gpt-5.5/regulations/18-nycrr/387/12/f/3/v/c.yaml",
-  "generated_output_root": "/tmp/axiom-encode-ny-telephone-11",
-  "generated_output_sha256": "a49a1244a8a5b32d27b59089210af0d9239e7c04defe13795a2e241bd5f7f99b",
+  "context_manifest_file": "/tmp/axiom-encode-ny-telephone-provenance-4/_eval_workspaces/openai-gpt-5.5/us-ny-regulation-18-nycrr-387-12-f-3-v-c/workspace/context-manifest.json",
+  "context_manifest_sha256": "7cc713e067ec2eb59629a106efc6746b3fff770c226be6b43d9d948cbee09b0d",
+  "generated_at": "2026-05-09T21:23:21.822035+00:00",
+  "generated_output_file": "/tmp/axiom-encode-ny-telephone-provenance-4/openai-gpt-5.5/regulations/18-nycrr/387/12/f/3/v/c.yaml",
+  "generated_output_root": "/tmp/axiom-encode-ny-telephone-provenance-4",
+  "generated_output_sha256": "1754c080c0c29db3130edb9e87f8c600e7687b2844fad41ba236ac3fe67888da",
   "model": "gpt-5.5",
-  "run_id": "db0d1015",
+  "run_id": "c416f59f",
   "runner": "openai-gpt-5.5",
   "schema_version": "axiom-encode/applied-rulespec/v1",
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "bfaa2efa43216cb42302fe2f165e1f223560871d227efa52a89fb4eaae45a6cb"
+    "value": "6570bb5d10a6bf54916e8c6a569576f4dc0b4a6fa42e22a52461c90903572f65"
   },
   "tool": "axiom-encode encode --apply",
-  "trace_file": "/tmp/axiom-encode-ny-telephone-11/traces/openai-gpt-5.5/us-ny-regulation-18-nycrr-387-12-f-3-v-c.json",
-  "trace_sha256": "b55ba27a8c59624d63e7ad0159cede66997f77eed3117671d98ad342df4ddc01"
+  "trace_file": "/tmp/axiom-encode-ny-telephone-provenance-4/traces/openai-gpt-5.5/us-ny-regulation-18-nycrr-387-12-f-3-v-c.json",
+  "trace_sha256": "e56ab234afc8c562b6566f27fbe5520543ac45defe805172dce39e0db6765357"
 }

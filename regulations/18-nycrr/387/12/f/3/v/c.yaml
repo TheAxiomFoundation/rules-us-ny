@@ -10,6 +10,16 @@ imports:
   - us-ny:regulations/18-nycrr/387/12/f/3/v/a
   - us-ny:regulations/18-nycrr/387/12/f/3/v/b
 rules:
+  - name: sets_snap_telephone_utility_allowance
+    kind: source_relation
+    source: 18 NYCRR 387.12(f)(3)(v)(c)
+    source_relation:
+      type: sets
+      target: us:regulations/7-cfr/273/9#snap_individual_utility_allowance_state_option
+      authority: state
+      value: us-ny:regulations/18-nycrr/387/12/f/3/v/c#snap_individual_utility_allowance
+      basis:
+        delegation: us:regulations/7-cfr/273/9#snap_state_standard_utility_allowance_delegation
   - name: telephone_standard_allowance_amount
     kind: parameter
     dtype: Money
@@ -41,4 +51,13 @@ rules:
     versions:
       - effective_from: '2025-10-01'
         formula: |-
-          if snap_heating_cooling_standard_allowance_eligible: 0 else: if snap_utilities_standard_allowance_eligible: 0 else: if household_incurred_or_anticipated_basic_service_cost_for_one_telephone: telephone_standard_allowance_amount else: 0
+          if snap_heating_cooling_standard_allowance_eligible:
+              0
+          else:
+              if snap_utilities_standard_allowance_eligible:
+                  0
+              else:
+                  if household_incurred_or_anticipated_basic_service_cost_for_one_telephone:
+                      telephone_standard_allowance_amount
+                  else:
+                      0
