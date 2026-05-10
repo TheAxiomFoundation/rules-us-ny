@@ -61,6 +61,7 @@
     us:regulations/7-cfr/273/8#snap_resource_eligible: holds
     us-ny:policies/otda/snap/fy-2026-benefit-calculation#snap_ssn_eligible: holds
     us-ny:policies/otda/snap/fy-2026-benefit-calculation#snap_work_requirement_eligible: holds
+    us-ny:policies/otda/snap/fy-2026-benefit-calculation#snap_student_eligible: holds
     us-ny:policies/otda/snap/fy-2026-benefit-calculation#snap_residency_citizenship_eligible: holds
     us-ny:policies/otda/snap/fy-2026-benefit-calculation#snap_eligible: holds
     us-ny:regulations/18-nycrr/387/12/f/3/v/a#snap_standard_utility_allowance: 1062

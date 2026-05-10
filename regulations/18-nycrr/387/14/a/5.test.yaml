@@ -13,11 +13,25 @@
     us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_failed_periodic_reporting_requirement: false
     us-ny:regulations/18-nycrr/387/14/a/5#input.household_member_failed_snap_work_requirements: false
   output:
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_public_assistance_categorically_eligible: not_holds
     us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorical_gross_income_limit_200_percent_fpl: 2610
     us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_elderly_disabled_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_dependent_care_categorically_eligible: not_holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_standard_gross_income_categorically_eligible: not_holds
     us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorically_eligible: holds
     us-ny:regulations/18-nycrr/387/14/a/5#snap_categorically_eligible_for_resource_exemption: holds
     us-ny:regulations/18-nycrr/387/14/a/5#snap_income_eligible: holds
+
+- name: dependent_care_household_under_200_percent_fpl_is_categorically_eligible
+  period: 2026-01
+  input:
+    <<: *base_categorical_case
+    us:statutes/7/2012/j#relation.member_of_household:
+      - us:statutes/7/2012/j#input.snap_member_is_elderly_or_disabled: false
+    us-ny:regulations/18-nycrr/387/14/a/5#input.household_has_out_of_pocket_dependent_care_expenses: true
+  output:
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_dependent_care_categorically_eligible: holds
+    us-ny:regulations/18-nycrr/387/14/a/5#ny_snap_categorically_eligible: holds
 
 - name: earned_income_household_under_150_percent_fpl_is_categorically_eligible
   period: 2026-01

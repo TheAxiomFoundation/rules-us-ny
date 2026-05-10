@@ -1,20 +1,20 @@
 {
   "applied_files": [
     {
-      "path": "regulations/18-nycrr/387/14/a/5.yaml",
-      "sha256": "3c09c5cc681372e668027bcc64b9cab75f3d6d59347562c47a335463d145edec"
+      "path": "policies/otda/snap/fy-2026-benefit-calculation.yaml",
+      "sha256": "3f2dc2e3d0dac063dae7b9f28e4ccc9b2abb3167cc18f7018a4e9157085fe04f"
     },
     {
-      "path": "regulations/18-nycrr/387/14/a/5.test.yaml",
-      "sha256": "05a4891833028e4331df73cac124669c77834bbfdb2882a0dda94c5b57aa0e6c"
+      "path": "policies/otda/snap/fy-2026-benefit-calculation.test.yaml",
+      "sha256": "dda7a0e8721e53e5367069ae6f70175ac864572cedcbe6941b83f4f750cc5fce"
     }
   ],
   "axiom_encode_version": "0.2.64",
   "backend": "codex",
-  "citation": "18 NYCRR 387.14(a)(5) companion-test coverage repair",
+  "citation": "NY SNAP composition companion-test coverage repair",
   "context_manifest_file": null,
   "context_manifest_sha256": null,
-  "generated_at": "2026-05-10T22:11:38.805661+00:00",
+  "generated_at": "2026-05-10T22:11:38.804225+00:00",
   "generated_output_file": null,
   "generated_output_root": null,
   "generated_output_sha256": null,
@@ -25,7 +25,7 @@
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "08bcf72dc7c3b1980e973fa996ead11fa306e2b8d8d04d05aa9be1adae3bdfe6"
+    "value": "9fbd2935ad52b58e6308881a6bf5e63dd57b13507a240fb1ea009a1b5bf94bc1"
   },
   "tool": "codex-assisted axiom-encode apply manifest",
   "trace_file": null,
