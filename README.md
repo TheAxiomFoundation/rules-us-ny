@@ -17,9 +17,9 @@ parameter/test fixture files, or generated formula artifacts.
 
 Federal materials belong in `rules-us`. New York-administered state and city materials belong here.
 
-## PolicyEngine eCPS SNAP Comparison
+## PolicyEngine ECPS SNAP Comparison
 
-Compare the New York SNAP composition against PolicyEngine enhanced CPS records
+Compare the New York SNAP composition against PolicyEngine ECPS (enhanced CPS) records
 with the shared `axiom-encode` oracle command:
 
 ```bash
@@ -33,10 +33,10 @@ uv run --project ../axiom-encode --with policyengine-us --with numpy \
 The comparison uses PolicyEngine's `snap_normal_allotment`, not top-level
 `snap`, because microsimulation `snap` includes take-up adjustments. It compares
 against RuleSpec `us:statutes/7/2017/a#snap_regular_month_allotment` because
-eCPS does not include application-date facts for initial-month proration.
+ECPS does not include application-date facts for initial-month proration.
 
 CI runs a 20-record positive-benefit smoke comparison on pushes and pull
-requests. The full New York eCPS comparison runs weekly and can be started
+requests. The full New York ECPS comparison runs weekly and can be started
 manually from the `PolicyEngine Oracle` GitHub Actions workflow with `full_run`
 enabled. The full population run uses a 95 percent match-rate gate because
 current PolicyEngine's NY BBCE parameters document unimplemented dependent-care
