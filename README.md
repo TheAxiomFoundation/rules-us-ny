@@ -1,4 +1,4 @@
-# rules-us-ny
+# rulespec-us-ny
 
 New York RuleSpec encodings.
 
@@ -15,7 +15,7 @@ Use RuleSpec YAML for encoded rules. Do not add source text, source registry
 sidecars, generated source payloads, singular rule roots, separate
 parameter/test fixture files, or generated formula artifacts.
 
-Federal materials belong in `rules-us`. New York-administered state and city materials belong here.
+Federal materials belong in `rulespec-us`. New York-administered state and city materials belong here.
 
 ## PolicyEngine ECPS SNAP Comparison
 

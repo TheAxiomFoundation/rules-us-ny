@@ -1,4 +1,4 @@
-# rules-us-ny Agent Notes
+# rulespec-us-ny Agent Notes
 
 This repo stores New York RuleSpec encodings.
 
@@ -10,5 +10,5 @@ This repo stores New York RuleSpec encodings.
 ## Do Not
 
 - Add singular rule roots, separate parameter/test fixture files, or generated formula artifacts.
-- Put federal source slices or federal RuleSpec outputs here; use `rules-us`.
+- Put federal source slices or federal RuleSpec outputs here; use `rulespec-us`.
 - Add source text, source registry sidecars, generated source payloads, or extracted document snapshots to Git.
